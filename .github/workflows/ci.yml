@@ -1,0 +1,128 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_BUILD_JOBS: 2
+  RUST_TEST_THREADS: 2
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: desktop/.node-version
+          package-manager-cache: false
+      - name: Check source distribution
+        run: python3 tools/check_source.py
+      - name: Install cargo-audit
+        run: cargo install cargo-audit --locked --version 0.23.0
+      - name: Audit Rust lockfiles
+        run: |
+          cargo audit --file Cargo.lock
+          cargo audit --file desktop/src-tauri/Cargo.lock
+      - name: Audit frontend lockfile
+        working-directory: desktop
+        run: npm audit --audit-level=high
+
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: desktop/.node-version
+          package-manager-cache: false
+      - name: Install Ubuntu build dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libclang-dev llvm-dev pkg-config libssl-dev libwebkit2gtk-4.1-dev libxdo-dev libayatana-appindicator3-dev librsvg2-dev patchelf
+          printf 'LIBCLANG_PATH=%s\n' "$(llvm-config --libdir)" >> "$GITHUB_ENV"
+      - name: Configure Windows C++ and libclang
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $vswhere = "${env:ProgramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe"
+          $cppInstall = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+          if (-not $cppInstall) { throw 'MSVC Build Tools were not found' }
+          $cppVersion = (Get-Content "$cppInstall/VC/Auxiliary/Build/Microsoft.VCToolsVersion.default.txt" -Raw).Trim()
+          $cppInclude = "$cppInstall/VC/Tools/MSVC/$cppVersion/include"
+          $sdkBase = "${env:ProgramFiles(x86)}/Windows Kits/10/Include"
+          $sdkVersion = Get-ChildItem -LiteralPath $sdkBase -Directory | Where-Object Name -match '^\d+\.\d+\.\d+\.\d+$' | Sort-Object { [version]$_.Name } -Descending | Select-Object -First 1
+          if (-not $sdkVersion) { throw 'Windows SDK was not found' }
+          $sdkInclude = $sdkVersion.FullName
+          $clangCandidates = @("$env:ProgramFiles/LLVM/bin", "$cppInstall/VC/Tools/Llvm/x64/bin", "$cppInstall/VC/Tools/Llvm/bin")
+          $clangDirectory = $clangCandidates | Where-Object { Test-Path -LiteralPath "$_/libclang.dll" } | Select-Object -First 1
+          if (-not $clangDirectory) { throw 'libclang.dll was not found on this runner' }
+          "LIBCLANG_PATH=$clangDirectory" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "BINDGEN_EXTRA_CLANG_ARGS=-isystem `"$cppInclude`" -isystem `"$sdkInclude/ucrt`" -isystem `"$sdkInclude/shared`" -isystem `"$sdkInclude/um`"" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+      - name: Toolchain
+        run: |
+          rustup show active-toolchain
+          rustc --version
+          node --version
+      - name: Rust formatting
+        run: |
+          cargo fmt --all --check
+          cargo fmt --manifest-path desktop/src-tauri/Cargo.toml --all --check
+      - name: Core Clippy
+        run: cargo clippy --workspace --all-targets --release --locked -- -D warnings
+      - name: Core tests
+        run: cargo test --workspace --release --locked
+      - name: Core binaries
+        run: cargo build --workspace --release --locked --bin minterd --bin minterctl
+      - name: Frontend dependencies
+        working-directory: desktop
+        run: npm ci
+      - name: Frontend checks
+        working-directory: desktop
+        run: |
+          npm run format:check
+          npm run check
+          npm run build
+      - name: Prepare GUI sidecars
+        run: node desktop/tools/prepare-binaries.mjs target/release
+      - name: GUI Clippy
+        run: cargo clippy --manifest-path desktop/src-tauri/Cargo.toml --all-targets --release --features tauri/custom-protocol --locked -- -D warnings
+      - name: GUI production build
+        working-directory: desktop
+        run: npm run tauri -- build --no-bundle -- --locked
+      - name: Package developer build
+        run: python tools/package_ci.py
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: minter-rust-node-${{ matrix.os }}
+          path: |
+            artifacts/*.zip
+            artifacts/*.tar.gz
+          if-no-files-found: error
+          retention-days: 14

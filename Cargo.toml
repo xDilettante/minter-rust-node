@@ -1,0 +1,30 @@
+[package]
+license = "MIT"
+name = "minter-state"
+version = "0.1.0"
+edition = "2024"
+
+[workspace]
+members = ["crates/minter-api", "crates/minter-protocol", "crates/minter-app", "crates/minter-iavl", "crates/minter-light", "crates/minter-p2p", "crates/minter-node-control"]
+exclude = ["vendor/tendermint-p2p"]
+resolver = "3"
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4.6", features = ["derive"] }
+flate2 = "1"
+hex = { version = "0.4", features = ["serde"] }
+minter-iavl = { path = "crates/minter-iavl" }
+minter-light = { path = "crates/minter-light" }
+minter-node-control = { path = "crates/minter-node-control" }
+minter-p2p = { path = "crates/minter-p2p" }
+prost = "0.13"
+rocksdb = { version = "=0.25.0", default-features = false, features = ["bindgen-runtime", "lz4"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+tempfile = "3"
+tokio = { version = "1", features = ["io-util", "macros", "rt-multi-thread", "signal"] }
+
+[patch.crates-io]
+tendermint-p2p = { path = "vendor/tendermint-p2p" }

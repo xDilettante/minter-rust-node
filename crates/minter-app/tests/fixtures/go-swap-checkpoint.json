@@ -1,0 +1,11 @@
+{
+  "format": 1,
+  "network": "minter-mainnet-5",
+  "height": 10197400,
+  "blockHash": "1d5ff657764e6f2da4b7766d37435de23826143aa6cbdee46fa20b00907e795f",
+  "appHash": "1fcd1804793dc7c35faa185e22eea205ca95e8d656e980b85f4425d84e5d5e5b",
+  "snapshotSha256": "82a2e0b1db8c91c6fe6ec36b7b94ab4ce8c71a7e244e29e1b461e3ad31488dc5",
+  "bytes": 1772,
+  "nodes": 99,
+  "emissionSource": "block-boundary-memory-or-db"
+}

@@ -1,0 +1,235 @@
+{
+  "genesis_time": "2025-01-01T08:00:00Z",
+  "chain_id": "minter-rust-evidence-fixture",
+  "initial_height": "101",
+  "consensus_params": {
+    "block": {
+      "max_bytes": "22020096",
+      "max_gas": "-1",
+      "time_iota_ms": "1000"
+    },
+    "evidence": {
+      "max_age_num_blocks": "100000",
+      "max_age_duration": "172800000000000",
+      "max_bytes": "1048576"
+    },
+    "validator": {
+      "pub_key_types": [
+        "ed25519"
+      ]
+    },
+    "version": {}
+  },
+  "app_hash": "",
+  "app_state": {
+    "note": "Public keys for a local interoperability fixture",
+    "validators": [
+      {
+        "total_bip_stake": "4000000000000000000000",
+        "public_key": "Mpf3063acfa6e3899d5f78a7a6da30cb1a6b5460e9526ac711f9dc2d554ee9a6e0",
+        "accum_reward": "0",
+        "absent_times": "________________________"
+      },
+      {
+        "total_bip_stake": "4000000000000000000000",
+        "public_key": "Mp46d6850acde1cfc110c25b433996da7dcee5eccd5b17b9c558d85d0a55c1e870",
+        "accum_reward": "0",
+        "absent_times": "________________________"
+      },
+      {
+        "total_bip_stake": "4000000000000000000000",
+        "public_key": "Mpeb62ce6b3da4676ce3091e4d3786e9d57ca22e854aad5181c5f933c6578c8e6e",
+        "accum_reward": "0",
+        "absent_times": "________________________"
+      },
+      {
+        "total_bip_stake": "4000000000000000000000",
+        "public_key": "Mpb0b2f037dd4db26e44ab30188f02a36c4caa141d3241e6fce284f839561b737e",
+        "accum_reward": "0",
+        "absent_times": "________________________"
+      }
+    ],
+    "candidates": [
+      {
+        "id": "1",
+        "reward_address": "Mx5a2e9b3035c7a3303fd3eaeb89fa62d3e97d5b53",
+        "owner_address": "Mx5a2e9b3035c7a3303fd3eaeb89fa62d3e97d5b53",
+        "control_address": "Mx5a2e9b3035c7a3303fd3eaeb89fa62d3e97d5b53",
+        "total_bip_stake": "4000000000000000000000",
+        "public_key": "Mpf3063acfa6e3899d5f78a7a6da30cb1a6b5460e9526ac711f9dc2d554ee9a6e0",
+        "commission": "10",
+        "stakes": [
+          {
+            "owner": "Mx5a2e9b3035c7a3303fd3eaeb89fa62d3e97d5b53",
+            "value": "4000000000000000000000",
+            "bip_value": "4000000000000000000000"
+          }
+        ],
+        "status": "2"
+      },
+      {
+        "id": "2",
+        "reward_address": "Mx86d4a59de3242c489abd039064ce1f84d5d15d99",
+        "owner_address": "Mx86d4a59de3242c489abd039064ce1f84d5d15d99",
+        "control_address": "Mx86d4a59de3242c489abd039064ce1f84d5d15d99",
+        "total_bip_stake": "4000000000000000000000",
+        "public_key": "Mp46d6850acde1cfc110c25b433996da7dcee5eccd5b17b9c558d85d0a55c1e870",
+        "commission": "10",
+        "stakes": [
+          {
+            "owner": "Mx86d4a59de3242c489abd039064ce1f84d5d15d99",
+            "value": "4000000000000000000000",
+            "bip_value": "4000000000000000000000"
+          }
+        ],
+        "status": "2"
+      },
+      {
+        "id": "3",
+        "reward_address": "Mx86d4a59de3242c489abd039064ce1f84d5d15d99",
+        "owner_address": "Mx86d4a59de3242c489abd039064ce1f84d5d15d99",
+        "control_address": "Mx86d4a59de3242c489abd039064ce1f84d5d15d99",
+        "total_bip_stake": "4000000000000000000000",
+        "public_key": "Mpeb62ce6b3da4676ce3091e4d3786e9d57ca22e854aad5181c5f933c6578c8e6e",
+        "commission": "10",
+        "stakes": [
+          {
+            "owner": "Mx86d4a59de3242c489abd039064ce1f84d5d15d99",
+            "value": "4000000000000000000000",
+            "bip_value": "4000000000000000000000"
+          }
+        ],
+        "status": "2"
+      },
+      {
+        "id": "4",
+        "reward_address": "Mx86d4a59de3242c489abd039064ce1f84d5d15d99",
+        "owner_address": "Mx86d4a59de3242c489abd039064ce1f84d5d15d99",
+        "control_address": "Mx86d4a59de3242c489abd039064ce1f84d5d15d99",
+        "total_bip_stake": "4000000000000000000000",
+        "public_key": "Mpb0b2f037dd4db26e44ab30188f02a36c4caa141d3241e6fce284f839561b737e",
+        "commission": "10",
+        "stakes": [
+          {
+            "owner": "Mx86d4a59de3242c489abd039064ce1f84d5d15d99",
+            "value": "4000000000000000000000",
+            "bip_value": "4000000000000000000000"
+          }
+        ],
+        "status": "2"
+      }
+    ],
+    "next_order_id": "0",
+    "accounts": [
+      {
+        "address": "Mx4f7ffe9c3b912f1e4a8d75bb59191178c9be492f",
+        "balance": [
+          {
+            "value": "40000000000000000000"
+          }
+        ],
+        "nonce": "0"
+      },
+      {
+        "address": "Mx5a2e9b3035c7a3303fd3eaeb89fa62d3e97d5b53",
+        "balance": [
+          {
+            "value": "2000000000000000000"
+          }
+        ],
+        "nonce": "0"
+      },
+      {
+        "address": "Mx86d4a59de3242c489abd039064ce1f84d5d15d99",
+        "balance": [
+          {
+            "value": "11000000000000000000000"
+          }
+        ],
+        "nonce": "0"
+      },
+      {
+        "address": "Mxd6cc14ccc8c8af41d619af9ae99376df8d06f1ef",
+        "balance": [
+          {
+            "value": "3000000000000000000"
+          }
+        ],
+        "nonce": "0",
+        "multisig_data": {
+          "weights": [
+            "2",
+            "3"
+          ],
+          "threshold": "4",
+          "addresses": [
+            "Mx4f7ffe9c3b912f1e4a8d75bb59191178c9be492f",
+            "Mxffdc116b49180bb6c10c4248cb8ab19a687558f5"
+          ]
+        }
+      }
+    ],
+    "commission": {
+      "coin": "0",
+      "payload_byte": "2",
+      "send": "12",
+      "buy_bancor": "0",
+      "sell_bancor": "0",
+      "sell_all_bancor": "0",
+      "buy_pool_base": "0",
+      "buy_pool_delta": "0",
+      "sell_pool_base": "0",
+      "sell_pool_delta": "0",
+      "sell_all_pool_base": "0",
+      "sell_all_pool_delta": "0",
+      "create_ticker3": "101",
+      "create_ticker4": "97",
+      "create_ticker5": "83",
+      "create_ticker6": "79",
+      "create_ticker7_10": "71",
+      "create_coin": "19",
+      "create_token": "73",
+      "recreate_coin": "0",
+      "recreate_token": "0",
+      "declare_candidacy": "0",
+      "delegate": "0",
+      "unbond": "0",
+      "redeem_check": "0",
+      "set_candidate_on": "0",
+      "set_candidate_off": "0",
+      "create_multisig": "0",
+      "multisend_base": "17",
+      "multisend_delta": "5",
+      "edit_candidate": "0",
+      "set_halt_block": "0",
+      "edit_ticker_owner": "0",
+      "edit_multisig": "0",
+      "edit_candidate_public_key": "0",
+      "create_swap_pool": "0",
+      "add_liquidity": "0",
+      "remove_liquidity": "0",
+      "edit_candidate_commission": "0",
+      "mint_token": "23",
+      "burn_token": "29",
+      "vote_commission": "0",
+      "vote_update": "0",
+      "failed_tx": "3",
+      "add_limit_order": "0",
+      "remove_limit_order": "0",
+      "move_stake": "0",
+      "lock_stake": "0",
+      "lock": "0"
+    },
+    "max_gas": "90000",
+    "total_slashed": "0",
+    "emission": "27045000000000000000000",
+    "prev_reward": {
+      "time": "1735718400000000000",
+      "amount_bip": "1",
+      "amount_usdt": "1",
+      "off": false,
+      "reward": "7"
+    },
+    "version": "v300"
+  }
+}

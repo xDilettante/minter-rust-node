@@ -1,0 +1,1104 @@
+[
+  {
+    "name": "v3-before-v310",
+    "manifest": {
+      "format": 1,
+      "network": "minter-mainnet-5",
+      "height": 10523519,
+      "blockHash": "60c0a2ec298b57608c080baaf1a5bef3c2c745933ff58de6d6dc7d2ce5523e25",
+      "appHash": "d62e457ee5358c8d6f1001575ecb3a75f8b9eecb71719426e2da1c0e2d654e02",
+      "snapshotSha256": "5349886fa0c631688c5a418d6a5c3a8bdc02be92ab92ea4b3393c5100716d992",
+      "bytes": 858,
+      "nodes": 41,
+      "emissionSource": "block-boundary-memory-or-db"
+    },
+    "snapshot": "eNq0VEtoXFUYvv9J0iR/J6n+GntMoowH33kwj0ym91YXFVPig2gViRpjuZk5JEMnmem9d0bCMPWQojTQrpqFXTmCdC24EBEkWrKQFikWVHQXDKgLwd24Uu4jM0mddq4U/0VyHt/9vu9/nNli+DVDLJv5XNZ0CpZNn7K5iiiWFk6ekqvCqIhXS8vuP2e1KIUhHLmSldZybsUZz1irRacw/nJpIZ/LvCBXT05lE6lUXBejomzmS1IYFSGDI0McWzwWNp4W1Wp1VBQL70hLGGJyQp+MJdIJUR2t/B/GTtysH9ZYMhVL6ulEWlTn70XCA0syt7jkUI/mRu3iu0/i49i5ZNpLFP1+fOrMTur8hcJdMPv2VaNU//yPq6dPbzy6/dNw/5icYbP4GvaUpWXnCis2PTdXETPmsptWORmLiVEx7VELQ8RjcX1S13WvGA1M/CZMKpF0k6vOP4jDiAv5QubUszLvmNQ/J+LpZCodPzIRS4n5+/EwHrQd03Km93s/M4gce+RyznYdUaTj6PhTH15Xb1y+NDjgcnYVrVxG0j3fneP3rX1yfFjTANR7w19eGhzoxW7ssh3TkY/RIzhgAmj/CsJv1BW1uXm2dnGNQ4Bjt8UpDg/Q0C1wHKIBCwupxthtcQ01dgu14LaFGoco+xnoR0DI0HWof1uXtRYk+2KDwZ0cDjKmVF3WWlztiw2AOznsY6AUB53SeCDj3ts08ntLpFp//hXLecg5r2nNFYd+iux+6dbQoCPY7W/BY2pRJrUe+Wz6wtRfyhhqrjgcpoGAyaHe2d4vYHElYgztVXBchUPU11Bw++JbZ7vWW9VSrW98/Muvz/zGNa254oFX1vDKwnv1TbBdE4FHFlSho5e6ETIcop1+UsxP6qO3xkrntj9wCR4mgZAl/oP/wNRZeL/mL/2//O/La11HSUcoUuJP9V+DQ4QQoejRRP1N1t+wN+l1hDLN1F/caTvEV/hXaqcGIVAe+Qg9gaLcDm552DEaCY0NMij7m45Jmgjxqb13ipruWChF3104bBR8Q+3Q9t4JCC9iB31D6kHYItjk0EcHEa5RJ/N+m7xpu+aO4Ql6CeEGTdePb7dtGmy37T4LuG+478zrwFbQgXDNC5x33k2Hdh+Bf9L1zwAr3pUq",
+    "blocks": [
+      {
+        "height": 10523520,
+        "begin": {
+          "request": "Oq0BCiASKyE2mYhU06pgC7n2LbpM3XQZcomGglgupFMBlatYqhJHCgASEG1pbnRlci1tYWlubmV0LTUYgKeCBSIGCIrs07sGKgISAFog1i5FfuU1jI1vEAFXXss6dfi57stxcZQm4tocDi1lTgIaQBIdChsKFFd4+YXbdUxmKGkfVvra5Qxl/dvoGJDu/B4SHwobChQB0Pq9JR/LviuTtLknsmrSoamQdxjv09oQEAE=",
+          "response": "QgA="
+        },
+        "end": {
+          "request": "UgUIgKeCBQ==",
+          "response": "WmMKKQoiCiACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABCP7vweCikKIgogAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ8NPaEBILCgkIgK3iBBCgjQY="
+        },
+        "commit": {
+          "request": "WgA=",
+          "response": "YiISIJ+U58XXgWFD9FFw3eEkGpduwnMKYl75pocCqfeiGeCt"
+        },
+        "appHash": "9f94e7c5d7816143f45170dde1241a976ec2730a625ef9a68702a9f7a219e0ad",
+        "emission": "1000000000000202853910186474",
+        "events": [
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "DAO",
+              "address": "Mx7f0fc21d932f38ca9444f61703174569066cfa50",
+              "amount": "0",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Developers",
+              "address": "Mx688568d9d70c57e71d0b9de6480afb0d317f885c",
+              "amount": "0",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Validator",
+              "address": "Mx0201000000000000000000000000000000000000",
+              "amount": "0",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Delegator",
+              "address": "Mx0201000000000000000000000000000000000000",
+              "amount": "96950674307988",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "DAO",
+              "address": "Mx7f0fc21d932f38ca9444f61703174569066cfa50",
+              "amount": "12345678901",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Developers",
+              "address": "Mx688568d9d70c57e71d0b9de6480afb0d317f885c",
+              "amount": "12345678901",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Validator",
+              "address": "Mx0101000000000000000000000000000000000000",
+              "amount": "12839506057",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Delegator",
+              "address": "Mx0101000000000000000000000000000000000000",
+              "amount": "105729694746502",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Delegator",
+              "address": "Mx0102000000000000000000000000000000000000",
+              "amount": "12553479111",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          }
+        ]
+      },
+      {
+        "height": 10523521,
+        "begin": {
+          "request": "Oq0BCiAm/FiKFfhZm5Fr1oWu/xYbMiXyCLl8rk8tGrCU1/JSRBJHCgASEG1pbnRlci1tYWlubmV0LTUYgaeCBSIGCI/s07sGKgISAFogn5TnxdeBYUP0UXDd4SQal27CcwpiXvmmhwKp96IZ4K0aQBIdChsKFFd4+YXbdUxmKGkfVvra5Qxl/dvoGJDu/B4SHwobChQB0Pq9JR/LviuTtLknsmrSoamQdxjv09oQEAE=",
+          "response": "QgA="
+        },
+        "end": {
+          "request": "UgUIgaeCBQ==",
+          "response": "Wg0SCwoJCICt4gQQoI0G"
+        },
+        "commit": {
+          "request": "WgA=",
+          "response": "YiISIBBiKsFlITUzH8UNu2YLp2hdPvVLXqWVKeSdoU5JNQ5L"
+        },
+        "appHash": "10622ac1652135331fc50dbb660ba7685d3ef54b5ea59529e49da14e49350e4b",
+        "emission": "1000000000000202977366975487",
+        "events": []
+      }
+    ]
+  },
+  {
+    "name": "v4-before-v320",
+    "manifest": {
+      "format": 1,
+      "network": "minter-mainnet-5",
+      "height": 10523519,
+      "blockHash": "e4393f27272de181acafedc9c62e53a2028deb923b7c0847db10619efbead0b1",
+      "appHash": "d62e457ee5358c8d6f1001575ecb3a75f8b9eecb71719426e2da1c0e2d654e02",
+      "snapshotSha256": "406eb534a2c96df0f475558f44d90ef5e27c525d8c664f43663b6219beae4df5",
+      "bytes": 865,
+      "nodes": 41,
+      "emissionSource": "block-boundary-memory-or-db"
+    },
+    "snapshot": "eNq0VEtoXFUYvv9J0iR/J6n+GntMoowH33kwj0ym91YXFVOCSrS6qBpjuZk5JENnMtN774wMw9RDitJAu2oWduUI0rXgQkSQaMlCWqRYUNFdMKAuBHfjSrmPvNpp50rov0jO47vf9/2PM+sMv2WIFTOfy5pO0bLpczZbE6Xy/KnTsiqMmnijXHD/OdWSFIZw5FJWWoXckjOesaolpzj+Wnk+n8u8LKunprKJVCqui1FRMfNlKYyakMGRIY4tHAsbz4t6vT4qSsX3pCUMMTmhT8YS6YSoj9buhbETt+qHNZZMxZJ6OpEW9bkHkfDAoswtLDrUo7nRuPT+s/g0di6a9iJFfxyfOruZunCxeB+cfPeaUW5++de1M2dWn9z4Zbh/TM6wGlaxpyItO1dcsqkwWxMzZsFNq5KMxcSomPaohSHisbg+qeu6V4xtTPwWTCqRnNBjezGJ2zFuAepzj+Iw4ny+mDn9osw7JvXPing6mUrHj0zEUmLuYTyMB23HtJzpvfmdHUSOPbKQs13XFOk4Ov7cxzfUW1cuDw64nF0lK5eR9MAP5/lDy58dH9Y0APXB8NeXBwd6sRu7bMd05FP0BA6YANptQfiduqrW1s41Li1zCHDsrjjF4REaugOOQzRgYSHVGLsrbluN3UEtuG2hxiHKfgX6GRAydAOa3zdlowXJnlhlsJ/DQcaUaspGi6s9sQqwn8M+Bkpx0CmNBzLuvU0jf7ZEqpWXXrecx5wLmraz4tBPka0v3RoadAS7/S14TC3KpFYiX0xfnPpHGUM7Kw6HaSBgcqj3ZO9XsLAUMYZ2KziuwiHq21Zw++JbZ1vWW9VSrax++tvvL/zBNW1nxQOvbNsrC+/VN8G2TAQeWVCFjl7qRshwiHb6STE/qU/eGSuf3/jIJXicBEKW+E/+A1Pn4MOGv/T/8n+vLHcdJR2hRIm/1f8NDhFChJJHE/U3WX/D3qY3ESo003xls+0QX+XfqM0GhEB55CP0DIpKO7jlYcdoJDQ2yKDibzomaSLEp/buKdpxx0Ip+u7CYaPgG2qHtndPQHgRO+gbUg/COsEahz46iHCdOpn32+RN23V3DE/Qqwg3abp5fKNt02CjbfdZwH3TfWdeB9aDDoRrXuC88346tPUI/JOu/wYANC2e5w==",
+    "blocks": [
+      {
+        "height": 10523520,
+        "begin": {
+          "request": "Oq0BCiAP/bvEBEABgp/MSeLMEgaT0Me4Adzuz2Jer68tG3Ms2RJHCgASEG1pbnRlci1tYWlubmV0LTUYgKeCBSIGCIrs07sGKgISAFog1i5FfuU1jI1vEAFXXss6dfi57stxcZQm4tocDi1lTgIaQBIdChsKFFd4+YXbdUxmKGkfVvra5Qxl/dvoGJDu/B4SHwobChQB0Pq9JR/LviuTtLknsmrSoamQdxjv09oQEAE=",
+          "response": "QgA="
+        },
+        "end": {
+          "request": "UgUIgKeCBQ==",
+          "response": "WmMKKQoiCiACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABCP7vweCikKIgogAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ8NPaEBILCgkIgK3iBBCgjQY="
+        },
+        "commit": {
+          "request": "WgA=",
+          "response": "YiISID1Ydihij/rlZ267m9n/ma7g+wA1n7zdmx0SwXY9wbL1"
+        },
+        "appHash": "3d587628628ffae5676ebb9bd9ff99aee0fb00359fbcdd9b1d12c1763dc1b2f5",
+        "emission": "1000000000000105903235878486",
+        "events": [
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "DAO",
+              "address": "Mx7f0fc21d932f38ca9444f61703174569066cfa50",
+              "amount": "0",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Developers",
+              "address": "Mx688568d9d70c57e71d0b9de6480afb0d317f885c",
+              "amount": "0",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Validator",
+              "address": "Mx0201000000000000000000000000000000000000",
+              "amount": "0",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "DAO",
+              "address": "Mx7f0fc21d932f38ca9444f61703174569066cfa50",
+              "amount": "12345678901",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Developers",
+              "address": "Mx688568d9d70c57e71d0b9de6480afb0d317f885c",
+              "amount": "12345678901",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Validator",
+              "address": "Mx0101000000000000000000000000000000000000",
+              "amount": "12839506057",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Delegator",
+              "address": "Mx0101000000000000000000000000000000000000",
+              "amount": "105729694746502",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Delegator",
+              "address": "Mx0102000000000000000000000000000000000000",
+              "amount": "12553479111",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          }
+        ]
+      },
+      {
+        "height": 10523521,
+        "begin": {
+          "request": "Oq0BCiD66q7e90UgXnBPXxmWw2hlq2anH+ynCfgiKAIamL8DJRJHCgASEG1pbnRlci1tYWlubmV0LTUYgaeCBSIGCI/s07sGKgISAFogPVh2KGKP+uVnbrub2f+ZruD7ADWfvN2bHRLBdj3BsvUaQBIdChsKFFd4+YXbdUxmKGkfVvra5Qxl/dvoGJDu/B4SHwobChQB0Pq9JR/LviuTtLknsmrSoamQdxjv09oQEAE=",
+          "response": "QgA="
+        },
+        "end": {
+          "request": "UgUIgaeCBQ==",
+          "response": "Wg0SCwoJCICt4gQQoI0G"
+        },
+        "commit": {
+          "request": "WgA=",
+          "response": "YiISIGxisi7+F8sGuFQBpUJAuuydHa3cPwf5OPv1t2AOmaFC"
+        },
+        "appHash": "6c62b22efe17cb06b85401a54240baec9d1daddc3f07f938fbf5b7600e99a142",
+        "emission": "1000000000000106026692667499",
+        "events": []
+      }
+    ]
+  },
+  {
+    "name": "v5bug-before-v330",
+    "manifest": {
+      "format": 1,
+      "network": "minter-mainnet-5",
+      "height": 10523519,
+      "blockHash": "68bb2a32c8a9a2d832869c41547fce03da48ff5ead56ad8e25acf5d8886c1311",
+      "appHash": "d62e457ee5358c8d6f1001575ecb3a75f8b9eecb71719426e2da1c0e2d654e02",
+      "snapshotSha256": "ed2d6ceca37bf077748de85dabd44fbc366e619753b5567f3c99109cf2936758",
+      "bytes": 874,
+      "nodes": 41,
+      "emissionSource": "block-boundary-memory-or-db"
+    },
+    "snapshot": "eNq0VEtoXFUYvv9J0iR/J6n+GntMoowH33kwj8xM760uKqYElWh1UTXGcjNzSIZOMtN774yEYeohRWmgXUizsBudgnQtuBARJFqykBYpFlR0FwyoC8HduFLuI89OO1eC/yI5j+9+3/c/zqwx/IYhVsxCPmc6Rcumz9hUVZTKM6dOy0VhVMVr5Xn3n7NYksIQjlzISWs+v+CMZq3FklMcfaU8U8hnX5SLp8ZziVQqrothUTELZSmMqpDBkSGOzR4LG8+KWq02LErFd6QlDJEe09OxRCYhasPV/8PYib36YY0lU7GknklkRG36fiQ8MCfzs3MOdWlu1C+9+zQ+ie1zpj1H0R9Gx89upC5cLN4DJ9++bpQbX/x5/cyZlcfXfx7sHZGT7ArgR4BdFWnZ+eKCTR/AVFVMmvNuZpVkLCaGxYTHLgwRj8X1tK7rXj22MPE9mFQiOZaO7cYkmmD0PZjk7Ri3TrXph3EQcaZQzJ5+XhYck3qnRDyTTGXiR8ZiKTH9IB7Gg7ZjWs7E7jKc7UeOXXI+b7upUaTt6OgzH99Ub1y93N/ncnaUrHxW0n3fn+cPLH16fFDTANR7g19d7u/rxk7ssB3TkU/QY9hnAmi3BeG36ppaXT1Xv7TEIcCxu+IUh4do4A44DtGAhYVUY+yuuC01dge14LaJGoco+wXoJ0DI0k1ofNeQ9SYku2KFwX4O+xlTqiHrTa52xQrAfg57GCjFQacMHsi69zYN/dEUqZZfeNVyHnEuaNr2ikMvRTa/dGto0BHs9LfgMTUpk1qOfD5xcfxvZQxsrzgcpr6AyaHuk91fwuxCxBjYqeC4CoeoZ0vB7YtvnW1ab1ZLtbzyya+/Pfc717TtFQ+8si2vLLxX3wTbNBF4ZEEV2rqpEyHLIdruJ8X8pK68NVI+v/6hS/AoCYQc8R/9B6bOwft1f+n/5f9cXeo4SjpCiRJ/qf8aHCKECCWPJupvcv6GvUmvI1RosvHSRsshvsa/Vht1CIHyyIfoKRSVVnDLw47QUGhskEHF37SlaSzEp/bOKdp2x0Ip+u7CYaPgG2qFtndOQHgRO+gbUhfCGsEqhx46iHCD2pn32+RN2w13DE/Qywi3aKJxfL1l02C9ZfdZwH3LfWdeB9aCDoRrXuC8/V46tPkI/JOOfwcAOCGoqA==",
+    "blocks": [
+      {
+        "height": 10523520,
+        "begin": {
+          "request": "Oq0BCiCgF53R0vpTiEs2r1SUzyOky7PG5LQu5vT95dhRY3dS4hJHCgASEG1pbnRlci1tYWlubmV0LTUYgKeCBSIGCIrs07sGKgISAFog1i5FfuU1jI1vEAFXXss6dfi57stxcZQm4tocDi1lTgIaQBIdChsKFFd4+YXbdUxmKGkfVvra5Qxl/dvoGJDu/B4SHwobChQB0Pq9JR/LviuTtLknsmrSoamQdxjv09oQEAE=",
+          "response": "QgA="
+        },
+        "end": {
+          "request": "UgUIgKeCBQ==",
+          "response": "WmIKKQoiCiABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABCt1tIvCigKIgogAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ0usEEgsKCQiAreIEEKCNBg=="
+        },
+        "commit": {
+          "request": "WgA=",
+          "response": "YiISIP69UImTzszU2Ul4HimP2lZeyqB+aOxV3AHLGL7Q4Von"
+        },
+        "appHash": "febd508993ceccd4d949781e298fda565ecaa07e68ec55dc01cb18bed0e15a27",
+        "emission": "1003748273071995036643809434",
+        "events": [
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Validator",
+              "address": "Mx0201000000000000000000000000000000000000",
+              "amount": "0",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "DAO",
+              "address": "Mx7f0fc21d932f38ca9444f61703174569066cfa50",
+              "amount": "0",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Developers",
+              "address": "Mx688568d9d70c57e71d0b9de6480afb0d317f885c",
+              "amount": "0",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Validator",
+              "address": "Mx0101000000000000000000000000000000000000",
+              "amount": "12839506057",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Delegator",
+              "address": "Mx0101000000000000000000000000000000000000",
+              "amount": "116295326976548",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Delegator",
+              "address": "Mx0102000000000000000000000000000000000000",
+              "amount": "12553479111",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "DAO",
+              "address": "Mx7f0fc21d932f38ca9444f61703174569066cfa50",
+              "amount": "1874136535939296233529352",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Developers",
+              "address": "Mx688568d9d70c57e71d0b9de6480afb0d317f885c",
+              "amount": "1874136535939296233529352",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          }
+        ]
+      },
+      {
+        "height": 10523521,
+        "begin": {
+          "request": "Oq0BCiBD6YMdJskiJKUBnBUG0BpKG7LjKPb5FJbhlNI3o0AcaRJHCgASEG1pbnRlci1tYWlubmV0LTUYgaeCBSIGCI/s07sGKgISAFog/r1QiZPOzNTZSXgeKY/aVl7KoH5o7FXcAcsYvtDhWicaQBIdChsKFFd4+YXbdUxmKGkfVvra5Qxl/dvoGJDu/B4SHwobChQB0Pq9JR/LviuTtLknsmrSoamQdxjv09oQEAE=",
+          "response": "QgA="
+        },
+        "end": {
+          "request": "UgUIgaeCBQ==",
+          "response": "Wg0SCwoJCICt4gQQoI0G"
+        },
+        "commit": {
+          "request": "WgA=",
+          "response": "YiISIIVbuEVamsJeH/P/quMbaXhn+P9JDoU5q9L8SkaIjBm8"
+        },
+        "appHash": "855bb8455a9ac25e1ff3ffaae31b697867f8ff490e8539abd2fc4a46888c19bc",
+        "emission": "1003748273071995160100598447",
+        "events": []
+      }
+    ]
+  },
+  {
+    "name": "v4-no-accrual",
+    "manifest": {
+      "format": 1,
+      "network": "minter-mainnet-5",
+      "height": 10523519,
+      "blockHash": "7d67d4fd280652edcc168f79299cfe9bd41701c914b519b9b1148cc3032f1727",
+      "appHash": "d62e457ee5358c8d6f1001575ecb3a75f8b9eecb71719426e2da1c0e2d654e02",
+      "snapshotSha256": "3fd62abafcf594bff17d61ab952110d227a5643ae8563718acf23f2293b0ef69",
+      "bytes": 861,
+      "nodes": 41,
+      "emissionSource": "block-boundary-memory-or-db"
+    },
+    "snapshot": "eNq0VE1oXFUUfucmaZLTSapHY69JlPHif36Yn0ym71UXFVPiD9EqEjXG8jJzSYZOMtP33oyEYeolRWmgXTULu3IE6VpwISJItGQhLVIsqOguGFAXgrtxpbyfzCR12nlSPIuZ+/Pd7/vuOee+LYZfM8Symc9lTadg2fQpm6uIYmnh5Cm5KoyKeLW07P45q0UpDOHIlay0lnMrznjGWi06hfGXSwv5XOYFuXpyKptIpeK6GBVlM1+SwqgIGSwZ4tjisbDxtKhWq6OiWHhHWsIQkxP6ZCyRTojqaOX/MHbiZv2wxpKpWFJPJ9KiOn8vEh5YkrnFJYd6NDdqF999Eh/HziXTXqLo9+NTZ3ZS5y8U7oLZt68apfrnf1w9fXrj0e2fhvvH5AybxdewpywtO1dYsem5uYqYMZfda5WTsZgYFdMetTBEPBbXJ3Vd95LRwMRvwqQSyQk9JqrzD+Iw4kK+kDn1rMw7JvXPiXg6mUrHj0zEUmL+fjyMB23HtJzp/d7PDCLHHrmcs11HFOk4Ov7Uh9fVG5cvDQ64nF1FK5eRdM935/h9a58cH9Y0APXe8JeXBgd6sRu7bMd05GP0CA6YANq/gvAbdUVtbp6tXVzjEODYbXGKwwM0dAsch2jAwkKqMXZbXEON3UIt2G2hxiHKfgb6ERAydB3q39ZlrQXJvthgcCeLg4wpVZe1Flv7YgPgThb7GCjFQac0Hsi4+zaN/N4Sqdaff8VyHnLOa1pzxKGfIrsn3RwadAS7/Sl4TC3SpNYjn01fmPpLGUPNEYfDNBAwOdQ72/sFLK5EjKG9Co6rcIj6GgpuXXzrbNd6q1yq9Y2Pf/n1md+4pjVHPPDKGl5ZeK++CbZrIvDIgix09FI3QoZDtNO/FPMv9dFbY6Vz2x+4BA+TQMgS/8F/YOosvF/zh/4v//vyWtdR0hGKlPhT/dfgECFEKHo0UX+S9SfsTXodoUwz9Rd32jbxFf6V2qlBCJRHPkJPoCi3g1sedoxGQmODG5T9ScckTYQ4au/toqY7FkrRdxcOGwXfUDu0vbcDwovYQd2QehC2CDY59NFBhGvUybxvk9dt19w2PEEvIdyg6frx7bZFg+221WcB9w33nXkV2AoqEK54gfPOu+nQ7iPwV7r+GQAeVJUo",
+    "blocks": [
+      {
+        "height": 10523520,
+        "begin": {
+          "request": "OqsBCiCA0599MwPcgth5XNdQXEnHeH3VekvFH3R5NRVOjP2oihJHCgASEG1pbnRlci1tYWlubmV0LTUYgKeCBSIGCIrs07sGKgISAFog1i5FfuU1jI1vEAFXXss6dfi57stxcZQm4tocDi1lTgIaPhIdChsKFFd4+YXbdUxmKGkfVvra5Qxl/dvoGJDu/B4SHQobChQB0Pq9JR/LviuTtLknsmrSoamQdxjv09oQ",
+          "response": "QgA="
+        },
+        "end": {
+          "request": "UgUIgKeCBQ==",
+          "response": "WmMKKQoiCiACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABCQ7vweCikKIgogAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ79PaEBILCgkIgK3iBBCgjQY="
+        },
+        "commit": {
+          "request": "WgA=",
+          "response": "YiISIP7LFdRl5Ie1Rnzedmgbr1T8x14U4OCmXpZslrDzySXP"
+        },
+        "appHash": "fecb15d465e487b5467cde76681baf54fcc75e14e0e0a65e966c96b0f3c925cf",
+        "emission": "1000000000000150248578037792",
+        "events": [
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "DAO",
+              "address": "Mx7f0fc21d932f38ca9444f61703174569066cfa50",
+              "amount": "0",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Developers",
+              "address": "Mx688568d9d70c57e71d0b9de6480afb0d317f885c",
+              "amount": "0",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Validator",
+              "address": "Mx0201000000000000000000000000000000000000",
+              "amount": "0",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Delegator",
+              "address": "Mx0201000000000000000000000000000000000000",
+              "amount": "94469133361895",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "DAO",
+              "address": "Mx7f0fc21d932f38ca9444f61703174569066cfa50",
+              "amount": "0",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Developers",
+              "address": "Mx688568d9d70c57e71d0b9de6480afb0d317f885c",
+              "amount": "0",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Validator",
+              "address": "Mx0101000000000000000000000000000000000000",
+              "amount": "0",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Delegator",
+              "address": "Mx0101000000000000000000000000000000000000",
+              "amount": "55532531097871",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          }
+        ]
+      },
+      {
+        "height": 10523521,
+        "begin": {
+          "request": "OqsBCiCT4+iztWarjOcEJw9wyp48axMAIYIkNSVL9sQtXQGEDBJHCgASEG1pbnRlci1tYWlubmV0LTUYgaeCBSIGCI/s07sGKgISAFog/ssV1GXkh7VGfN52aBuvVPzHXhTg4KZelmyWsPPJJc8aPhIdChsKFFd4+YXbdUxmKGkfVvra5Qxl/dvoGJDu/B4SHQobChQB0Pq9JR/LviuTtLknsmrSoamQdxjv09oQ",
+          "response": "QgA="
+        },
+        "end": {
+          "request": "UgUIgaeCBQ==",
+          "response": "Wg0SCwoJCICt4gQQoI0G"
+        },
+        "commit": {
+          "request": "WgA=",
+          "response": "YiISIEfJAEFsXj7NiRui1igi3YB3WYqHamvFgXqaV1ZklQuv"
+        },
+        "appHash": "47c900416c5e3ecd891ba2d62822dd8077598a876a6bc5817a9a575664950baf",
+        "emission": "1000000000000150372034826805",
+        "events": []
+      }
+    ]
+  },
+  {
+    "name": "v5bug-no-accrual",
+    "manifest": {
+      "format": 1,
+      "network": "minter-mainnet-5",
+      "height": 10523519,
+      "blockHash": "238e2031c1077a924c7ae37de6377a68757df8b3e2acaace3bcf28da08cd8dcb",
+      "appHash": "d62e457ee5358c8d6f1001575ecb3a75f8b9eecb71719426e2da1c0e2d654e02",
+      "snapshotSha256": "6019b4e9caf0c7d7849a7349be7ffc6856e1ced0dda714f0c9782c964f0558ac",
+      "bytes": 865,
+      "nodes": 41,
+      "emissionSource": "block-boundary-memory-or-db"
+    },
+    "snapshot": "eNq0VEtsG1UU9X1JmuTWSeFC6CMJyDzxz0djO7Y7U1gUkSoCFCgsCoRQTeynxKoduzNjI8tyeUoFaqR21SzoCiOhrpFYIISEAlUWqBWqqAQIdhGRgAUSO7MCzSe/4taDKu4ieZ8z55z7ed5g+DVDrJqFfM50SpZNn7K5uihXFk6dljVh1MVrlaL7z6mVpTCEI5dz0irml53JrFUrO6XJVyoLhXz2RVk7NZ1LpFJxXYyLqlmoSGHUhQyODHFs8VjYeFY0Go1xUS69Iy1hiPSUntYSmYRojNf/D2MnbtUPayyZ0pJ6JpERjfn7kfDAkswvLjnUF3Gjeendp/FJ7F4y7SWKfT85fXYrdeFi6R44+fY1o9L6/I9rZ86sPb750+jghJxldaxhX1Vadr60bFNxri5mzaKbVjWpaWJczHjUwhBxLa6ndV33irGDid+CSSWSU2ltPybRBqNrojH/MI4iLhRK2dPPy4Jj0uCciGeSqUz8yJSWEvMP4mE8aDum5czsz+/sMHLsk8W87bqmaNfRyWc+vKHeuHJ5eMjl7Clb+ayk+747zx9Y+eT4aCQCoN4b/fLy8FA/9mKP7ZiOfIIewyETIPKvIPxGXVXr6+eal1Y4BDh2R5zi8BCN3AbHIRawsJBqjN0Rt6PGbqMW3LZR4xBjPwP9CAhZugGtb1uy2YZkX6wxuJvDYcaUaslmm6t9sQZwN4cDDJTioFMGD2Tde5vGfm+LVKsvvGo5jzgXIpHdFYdBim5/6dbQoCPY62/BY2pTJrUa/Wzm4vRfyhjZXXE4TEMBk0P9J/u/gMXlqDGyV8FxFQ7RwI6C2xffOtu23q6WanXt419+fe43Honsrnjgle14ZeG9+ibYtonAIwuq0NVPvQhZDrFuPynmJ/XRWxOV85sfuASPkkDIEf/Bf2DqHLzf9Jf+X/73lZWeo6QjlCnxp/qvwSFKiFD2aGL+Judv2Jv0OkKVZlsvbXUc4qv8K7XVhBAoj3yMnkJR7QS3POwEjYXGBhlU/U1XmqZCfGrvnaJddyyUou8uHDYGvqFOaHvvBIQXsYO+IfUhbBCscxiggwjXqZt5v03etF13x/AEvYxwk2Zaxzc7Ng02O3afBdw33XfmdWAj6EC45gXOu++lQ9uPwD/p+WcAEdye4g==",
+    "blocks": [
+      {
+        "height": 10523520,
+        "begin": {
+          "request": "OqsBCiDR2q8eK2Hu3+k36K07/EY/2ZBVGgIFm3R5xOn3X4HScRJHCgASEG1pbnRlci1tYWlubmV0LTUYgKeCBSIGCIrs07sGKgISAFog1i5FfuU1jI1vEAFXXss6dfi57stxcZQm4tocDi1lTgIaPhIdChsKFFd4+YXbdUxmKGkfVvra5Qxl/dvoGJDu/B4SHQobChQB0Pq9JR/LviuTtLknsmrSoamQdxjv09oQ",
+          "response": "QgA="
+        },
+        "end": {
+          "request": "UgUIgKeCBQ==",
+          "response": "WmMKKQoiCiACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABCqgeUfCikKIgogAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ1cDyDxILCgkIgK3iBBCgjQY="
+        },
+        "commit": {
+          "request": "WgA=",
+          "response": "YiISIFaR5lYd4mXjL4DNrS4GJVjKRDChNXpfTMSMjLcB9QZJ"
+        },
+        "appHash": "5691e6561de265e32f80cdad2e062558ca4430a1357a5f4cc48c8cb701f50649",
+        "emission": "219359999026922608000150248578037792",
+        "events": [
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Validator",
+              "address": "Mx0201000000000000000000000000000000000000",
+              "amount": "0",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Delegator",
+              "address": "Mx0201000000000000000000000000000000000000",
+              "amount": "94469133361895",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "DAO",
+              "address": "Mx7f0fc21d932f38ca9444f61703174569066cfa50",
+              "amount": "73119999342307536000000000000000000",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Developers",
+              "address": "Mx688568d9d70c57e71d0b9de6480afb0d317f885c",
+              "amount": "73119999342307536000000000000000000",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Validator",
+              "address": "Mx0101000000000000000000000000000000000000",
+              "amount": "0",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Delegator",
+              "address": "Mx0101000000000000000000000000000000000000",
+              "amount": "55532531097871",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "DAO",
+              "address": "Mx7f0fc21d932f38ca9444f61703174569066cfa50",
+              "amount": "36559999671153768000000000000000000",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Developers",
+              "address": "Mx688568d9d70c57e71d0b9de6480afb0d317f885c",
+              "amount": "36559999671153768000000000000000000",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          }
+        ]
+      },
+      {
+        "height": 10523521,
+        "begin": {
+          "request": "OqsBCiBtG10LJki/hi2PQbonyjVtQmVwZYkH2SmIcWpfBoDfJBJHCgASEG1pbnRlci1tYWlubmV0LTUYgaeCBSIGCI/s07sGKgISAFogVpHmVh3iZeMvgM2tLgYlWMpEMKE1el9MxIyMtwH1BkkaPhIdChsKFFd4+YXbdUxmKGkfVvra5Qxl/dvoGJDu/B4SHQobChQB0Pq9JR/LviuTtLknsmrSoamQdxjv09oQ",
+          "response": "QgA="
+        },
+        "end": {
+          "request": "UgUIgaeCBQ==",
+          "response": "Wg0SCwoJCICt4gQQoI0G"
+        },
+        "commit": {
+          "request": "WgA=",
+          "response": "YiISILKtzlM5Xl74mEC3y4hopf8/aiGASdx5BxRkOazJLda0"
+        },
+        "appHash": "b2adce53395e5ef89840b7cb8868a5ff3f6a218049dc7907146439acc92dd6b4",
+        "emission": "219359999026922608000150248578037792",
+        "events": []
+      }
+    ]
+  },
+  {
+    "name": "v5fix-no-accrual",
+    "manifest": {
+      "format": 1,
+      "network": "minter-mainnet-5",
+      "height": 10523519,
+      "blockHash": "320dd494a273e46dfafa7c64f7b2d309636eaaae856dc2ce387368529b90a11f",
+      "appHash": "c75f6d6fadaac774909575985ba75fd93626ad0d0fb816dda68ad57f98513ec2",
+      "snapshotSha256": "1ff4f1648f19c583d4b884ad3b5c3d876333f8ab9140ca683239e78c870f3600",
+      "bytes": 1061,
+      "nodes": 45,
+      "emissionSource": "block-boundary-memory-or-db"
+    },
+    "snapshot": "eNq0VG1MW9Ub7znl9UBH/s9fxh0Dgie+TRjrbbn0ZWoCwiSbIsw4FEawtHe00tJ67+1FbGqvLDPFTKOhJuyD2kWDxoRoYqJ+mIaxsMVlMdNlbzHGhDjd/GCiiabqh5nbe9vC6NYa4/nQPuec3/M85/f7nXNXMFnGhMguv8/jkoKCCB/h4QgNhcdGJ/hp6ozQx8IB9U+aDvHUSSV+0sMLAd+k1OYWpkNSsK0/POb3uffw06M9HgvHsQ7aSmWXP8xTZ4Ty+pKTdo53Fjvup9FotJWGglO8QJ20o91uabfb2mm0NfIfHMxjfUgaMMuD1uceH7L55X2PPMsFxvftfjro8MmyZ8gy3tm/44B1ok8Spm44mJVjbRxr4Wh05DYCpMzL+8a9ElQY1JGci91L7iElXpfoheZTo4Hg4vunpFdfD88Pvzt6ueOuRVPNp5u/XXjpfGx+4IHlo4i8iUiFzAuiLzgpwmtoOEL7XAGVmWw1m2kr7U1Xp07KmllHh8PhSOuRxbA3YDgLy1nM6zGWDRjLBox1I8am9hppIg2EjPmD7olu3i+5YNMwZW1Wzsba280cHdlC6kiVKLkEqXe9DM/XE4ZU8AGfqFKDauPOtvveOqs8uXCkvlatWRoSfG4e/v91nNk88+GuBoMBIeVQw+dH6msrSTkpFSWXxN8Nd5JaF0KGDQPIF8oJZWnpYHJuhkE6Dt8SpzCoEbbeBMegZr0KLrIbxrfEZbvhm3TTd/N0Y1Az/gbBJUSQG86i1JcpPpmnyLqRwOjfLNZjrCgpPjn1zOKDey58x235efi8tenAC3vdb1/64LMLsmK8Hps2fXwsgfIkF79owkhRGOQAGylzq/sitPyUF6nM7t4rSLdLhw2GXMSgTVCdyVQ1rIRygtwMajY6wU7KtQ2UrplHMGW2+pPel3v+UJxbcxGD7NCRScWw7WoiVrPcOLfDfjrR/Xudsa7HV+b/s1+Jd3lOXjve9N6xeCZYl2hUE72HvJcvVg/+2Fj1xg+95C8TG4vvV+Jd/tNfnayveSobMKgGTNlElcaaOVbNr4NanaUElYOvHJ6jv3X/asvohjO65TNSmU288/3VrmuMwZCLGKTJg7Py4OLl0Q6npaqH1SzAugU454ik+rCGioou0ahgjcrR/dvD8dV5teodQAnyAHNRe/LKQfRiUgu1X+b6wkzpTnAQFALLL8o/HQyqBkJQKF2mWZt4tAkegicIkqEv9fCVgs/qBHNcuVLwVaiodPEW2EaoXKiokMZuh5aisToDWZsYO6C9iFRxreC50xUio3XUWhTCimuvZ45UwTSdVHFoXQJMoIKgFUBLDDJBFUFnoASnv5bpr8AZ9W4OwKMEnYPe1K7Vgqah1YLuY732OfWipx1Y0R0ozjydZ8n/oCbzCLSV0r8HAFZOUpQ=",
+    "blocks": [
+      {
+        "height": 10523520,
+        "begin": {
+          "request": "OqsBCiD1FYyOob52CZVRweLNVPL7yd/KgJ0w7z568EGllvdaChJHCgASEG1pbnRlci1tYWlubmV0LTUYgKeCBSIGCIrs07sGKgISAFogx19tb62qx3SQlXWYW6df2TYmrQ0PuBbdporVf5hRPsIaPhIdChsKFFd4+YXbdUxmKGkfVvra5Qxl/dvoGKrM9B4SHQobChReHAfTpmvcuqSAd3Fcy8qaaC/Q3xjV9eIQ",
+          "response": "QgA="
+        },
+        "end": {
+          "request": "UgUIgKeCBQ==",
+          "response": "WmMKKQoiCiACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABCqzPQeCikKIgogd3GtQ0vW3zUZ7lvVMx5mgVJjo9ivvdZ2gAP/f3kNtrwQ1fXiEBILCgkIgK3iBBCgjQY="
+        },
+        "commit": {
+          "request": "WgA=",
+          "response": "YiISIHCGsoHcRj64VmSX+79VgL7BgcRCDorIV7quw1+AsgoN"
+        },
+        "appHash": "7086b281dc463eb8566497fbbf5580bec181c4420e8ac857baaec35f80b20a0d",
+        "emission": "1000000000000197709015584046",
+        "events": [
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Validator",
+              "address": "Mx0201000000000000000000000000000000000000",
+              "amount": "0",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Delegator",
+              "address": "Mx0201000000000000000000000000000000000000",
+              "amount": "94272229344811",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "DAO",
+              "address": "Mx7f0fc21d932f38ca9444f61703174569066cfa50",
+              "amount": "15924363065001",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Developers",
+              "address": "Mx688568d9d70c57e71d0b9de6480afb0d317f885c",
+              "amount": "15924363065001",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Validator",
+              "address": "Mx0101000000000000000000000000000000000000",
+              "amount": "0",
+              "validator_pub_key": "Mp7771ad434bd6df3519ee5bd5331e66815263a3d8afbdd6768003ff7f790db6bc",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Delegator",
+              "address": "Mx0101000000000000000000000000000000000000",
+              "amount": "55416783466207",
+              "validator_pub_key": "Mp7771ad434bd6df3519ee5bd5331e66815263a3d8afbdd6768003ff7f790db6bc",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "DAO",
+              "address": "Mx7f0fc21d932f38ca9444f61703174569066cfa50",
+              "amount": "7962181532500",
+              "validator_pub_key": "Mp7771ad434bd6df3519ee5bd5331e66815263a3d8afbdd6768003ff7f790db6bc",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Developers",
+              "address": "Mx688568d9d70c57e71d0b9de6480afb0d317f885c",
+              "amount": "7962181532500",
+              "validator_pub_key": "Mp7771ad434bd6df3519ee5bd5331e66815263a3d8afbdd6768003ff7f790db6bc",
+              "for_coin": "0"
+            }
+          }
+        ]
+      },
+      {
+        "height": 10523521,
+        "begin": {
+          "request": "OqsBCiAK2ZgLztpU11sGPUoKeLfLYB2dvQMPfJuWAVp1ijsmUBJHCgASEG1pbnRlci1tYWlubmV0LTUYgaeCBSIGCI/s07sGKgISAFogcIaygdxGPrhWZJf7v1WAvsGBxEIOishXuq7DX4CyCg0aPhIdChsKFFd4+YXbdUxmKGkfVvra5Qxl/dvoGKrM9B4SHQobChReHAfTpmvcuqSAd3Fcy8qaaC/Q3xjV9eIQ",
+          "response": "QgA="
+        },
+        "end": {
+          "request": "UgUIgaeCBQ==",
+          "response": "Wg0SCwoJCICt4gQQoI0G"
+        },
+        "commit": {
+          "request": "WgA=",
+          "response": "YiISIMi2HLc2DUV44ayUs5neYUNoqnoXNjH8hJ9+cT+ELZYz"
+        },
+        "appHash": "c8b61cb7360d4578e1ac94b399de614368aa7a173631fc849f7e713f842d9633",
+        "emission": "1000000000000197832472373059",
+        "events": []
+      }
+    ]
+  },
+  {
+    "name": "v5fix-correction",
+    "manifest": {
+      "format": 1,
+      "network": "minter-mainnet-5",
+      "height": 10523519,
+      "blockHash": "7b7281be5ad933a6022d2618283f05ef810249fe9714c1380cf67c850861d328",
+      "appHash": "c75f6d6fadaac774909575985ba75fd93626ad0d0fb816dda68ad57f98513ec2",
+      "snapshotSha256": "d5536e0c8232ef9e76e4ee697be676f640f9331f928d3e9625a9efa8bc701f20",
+      "bytes": 1063,
+      "nodes": 45,
+      "emissionSource": "block-boundary-memory-or-db"
+    },
+    "snapshot": "eNq0VG1MW1UY7jnl80BHfJVxx4DgiV8TxnrbXvoxNQFhkk0RZhwKI1jaO1ppab339iIS7JVlpphpNNSE/VC7aNCYEE1M1B/TMBa2uCxmuuwrxpgQp5s/TDTRVP0xc3tvW6jdWmM8P9r3nPO873ue5znnrmKyggmR3QG/1y2FBBE+wkPTNBwZHRnnp6hrmj4WCap/0lSYpy4q8RNeXgj6J6Q2jzAVlkJtfZHRgN+zh58a6fZaOI510lYquwMRnrqmKa8vuWjHWEex4346MzPTSsOhSV6gLtpuc1hsDruNzrRO/w8H81ofkvrN8oD1uccH7QF53yPPcsGxfbufDjn9suwdtIx19O04YB3vlYTJnINZOdbOsRaOzgzfRoCU+Xj/mE+CCoM6EvPRe8k9pMTnFn3QfGokGFp6/5T06uuRhaF3Ry6337Vkqvl087eLL52PLvQ/sHIUkTcRqZB5QfSHJkR4DQ1N0153UGUmW81m2kp7UtWpi7Jm1tnudDpTemQwbA7GwtrNZvNGjCUHw5mdtlyMNRdjsXIqZriJNBAyGgh5xrv4gOSGTUOUtVs5O+uwmTk6vIXUkSpRcgtSz0YZnq8nDKngg35RpQbVxp1t9711Vnly8Uh9rVqzNCz4PTzc+nWM2Tz74a4GgwEh5VDD50fqaytJOSkVJbfE3w13klo3QoZ/DCBfKCeU5eWDiflZBuk4fFOcwqBG2HoDHIOa9Sq4yG4Y3xSX6YZv0E3fzdONQc34GwSXEEEeOIuSXyb5RJ4iG0Yco/+yWI+xoiT5xOQzSw/uufAdt+XnofPWpgMv7PW8femDzy7IivF6dMr08bE4ypNc/KIJI0VhkBPspMyj7ovQ8lNepDK3e68g3S4dNhiyEYM2QXU6U9WwEsoJ8jCo2egCBynXNlCqZh7BlLnqT3pe7v5DcW3NRgxyQHs6FcO2q/FozUrj/A7H6XjX73XGum5/WeDPPiXW6T157XjTe8di6WBDolFN9B3yXb5YPfBjY9UbP/SQv0xsNLZfiXUGTn91sr7mqUzAoBowZRJVGuvmWDW/Dmp1lhJUDrxyeJ7+1vWrPa0bTuuWz0hlLv7O91c7rzEGQzZikCYPzsiDi5dHO5yWqh5WswDrFuCsI5LqwzoqKrpEo4I1Kkf3b4/E1hbUqncAJcgLzEXtySsH0YsJLdR+meuLs6U7wUlQGCy/KP92MKgaCEHhVJlmbeLVJngQniBIht7kw1cKPqsTzHHlSsFXoaJSxVtgG6FyoaJCCrsdWorG6gxkbWJsB1sRqeJ6wbOnK0RG66i1KIQV11/PLKmCaTqp4tC6BJhABUGrgJYZZIIqgs5ACU59LVNfgTPq3eyHRwk6Bz3JXWsFTUNrBd3Heu1z6kVPObCqO1CceTrPklugJv0ItJXSvwcAs1VSfg==",
+    "blocks": [
+      {
+        "height": 10523520,
+        "begin": {
+          "request": "Oq0BCiDigdSqh8/tizQOsWP0inPYNb9OKRsKQhUryn9LCVSsjBJHCgASEG1pbnRlci1tYWlubmV0LTUYgKeCBSIGCIrs07sGKgISAFogx19tb62qx3SQlXWYW6df2TYmrQ0PuBbdporVf5hRPsIaQBIdChsKFFd4+YXbdUxmKGkfVvra5Qxl/dvoGKrM9B4SHwobChReHAfTpmvcuqSAd3Fcy8qaaC/Q3xjV9eIQEAE=",
+          "response": "QgA="
+        },
+        "end": {
+          "request": "UgUIgKeCBQ==",
+          "response": "WmMKKQoiCiACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABCozPQeCikKIgogd3GtQ0vW3zUZ7lvVMx5mgVJjo9ivvdZ2gAP/f3kNtrwQ1/XiEBILCgkIgK3iBBCgjQY="
+        },
+        "commit": {
+          "request": "WgA=",
+          "response": "YiISIFG2rCV6Ii/C6MxlhuInjwhgvwbaQ7C+DP0d0BZM+lEk"
+        },
+        "appHash": "51b6ac257a222fc2e8cc6586e2278f0860bf06da43b0be0cfd1dd0164cfa5124",
+        "emission": "1000000000000145961294921909",
+        "events": [
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Validator",
+              "address": "Mx0201000000000000000000000000000000000000",
+              "amount": "0",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "DAO",
+              "address": "Mx7f0fc21d932f38ca9444f61703174569066cfa50",
+              "amount": "0",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Developers",
+              "address": "Mx688568d9d70c57e71d0b9de6480afb0d317f885c",
+              "amount": "0",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Validator",
+              "address": "Mx0101000000000000000000000000000000000000",
+              "amount": "12839506057",
+              "validator_pub_key": "Mp7771ad434bd6df3519ee5bd5331e66815263a3d8afbdd6768003ff7f790db6bc",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Delegator",
+              "address": "Mx0101000000000000000000000000000000000000",
+              "amount": "115606212691178",
+              "validator_pub_key": "Mp7771ad434bd6df3519ee5bd5331e66815263a3d8afbdd6768003ff7f790db6bc",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Delegator",
+              "address": "Mx0102000000000000000000000000000000000000",
+              "amount": "12479092787",
+              "validator_pub_key": "Mp7771ad434bd6df3519ee5bd5331e66815263a3d8afbdd6768003ff7f790db6bc",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Delegator",
+              "address": "Mx7f0fc21d932f38ca9444f61703174569066cfa50",
+              "amount": "254519359",
+              "validator_pub_key": "Mp7771ad434bd6df3519ee5bd5331e66815263a3d8afbdd6768003ff7f790db6bc",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Delegator",
+              "address": "Mx688568d9d70c57e71d0b9de6480afb0d317f885c",
+              "amount": "254639384",
+              "validator_pub_key": "Mp7771ad434bd6df3519ee5bd5331e66815263a3d8afbdd6768003ff7f790db6bc",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "DAO",
+              "address": "Mx7f0fc21d932f38ca9444f61703174569066cfa50",
+              "amount": "15102898842113",
+              "validator_pub_key": "Mp7771ad434bd6df3519ee5bd5331e66815263a3d8afbdd6768003ff7f790db6bc",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Developers",
+              "address": "Mx688568d9d70c57e71d0b9de6480afb0d317f885c",
+              "amount": "15102898842113",
+              "validator_pub_key": "Mp7771ad434bd6df3519ee5bd5331e66815263a3d8afbdd6768003ff7f790db6bc",
+              "for_coin": "0"
+            }
+          }
+        ]
+      },
+      {
+        "height": 10523521,
+        "begin": {
+          "request": "Oq0BCiBOhpDMO7U9dJ2NRowMA3V+DAiuYfeRIK10k2Nt3riI2BJHCgASEG1pbnRlci1tYWlubmV0LTUYgaeCBSIGCI/s07sGKgISAFogUbasJXoiL8LozGWG4iePCGC/BtpDsL4M/R3QFkz6USQaQBIdChsKFFd4+YXbdUxmKGkfVvra5Qxl/dvoGKrM9B4SHwobChReHAfTpmvcuqSAd3Fcy8qaaC/Q3xjV9eIQEAE=",
+          "response": "QgA="
+        },
+        "end": {
+          "request": "UgUIgaeCBQ==",
+          "response": "Wg0SCwoJCICt4gQQoI0G"
+        },
+        "commit": {
+          "request": "WgA=",
+          "response": "YiISIF/UpkboMeelZRgB3iEDAwKqtlgiljSrnuHA2KR6P6vQ"
+        },
+        "appHash": "5fd4a646e831e7a5651801de21030302aab658229634ab9ee1c0d8a47a3fabd0",
+        "emission": "1000000000000146084751710922",
+        "events": []
+      }
+    ]
+  },
+  {
+    "name": "v5fix-emission-cap",
+    "manifest": {
+      "format": 1,
+      "network": "minter-mainnet-5",
+      "height": 10523519,
+      "blockHash": "d50b7f85969c171b41497412549060e7d6d71849985444d20b3543391c9c4c12",
+      "appHash": "9a039adfa7e23f6cd53f9c0bd8364b24f02deb497a5de265f4dcf890983d8e2a",
+      "snapshotSha256": "12b967c4ea92cb5fc9f5343692afee0462cc9164f33a589b2500af287e02b7a9",
+      "bytes": 887,
+      "nodes": 41,
+      "emissionSource": "block-boundary-memory-or-db"
+    },
+    "snapshot": "eNq0VF1oW2UYPu/XZm3eppu+s9uxrRI/HNO1HclJkyxH5pi4UZ1sTi8Uax2nyUcbljbhnJNIDdGPDmUFFWW9mEMkA9FbwQsvBKmOgsIY4hAGCkqw4M+NghfxRuX89G/NliPF9ybfz/M9z/P+5Cwz/IIhVoxCPmfYRdOij9l4lZfKk2fOijmuV/nT5Rnnx54rCa5zW8zmhDmTn7UPZs25kl08+GR5spDPnhBzZ47ltGQynuHDvGIUyoLrVS78I50fnToaNA7zWq02zEvFF4XJdZ4azaRiWlrjteHq/2Hs9M36QY0lkrFEJq2leW3iLiTcMS3yU9M2dStO1C+8cgAfwM5pw5qm6KWOSz982DhS+PbIuz03Uifu/33kt8demmiIP79vvnXx8JsHLgO+B9hdEaaVL85a9DaMV/lJY8bJrJKIxfgwH3PZuc7jsXgmlclk3HqsYeI3YZJaPKnFNmO0LRhtCyaxFZN2tCbuxUHEyUIxe/ZRUbAN2jnO4+lEMh0/NBpL8om7cS/2WLZh2mOby/ByP6rYLWbylpMaRaKnrr3w8D5m3KEoisMZKpn5rKDd35xX98x/dHxQUQDkq4OfvdPfF8YuDFm2YYv9tA/7DABlSxB+Ja/IpaVz9QvzKvg4dlucVOEeGrgFToWoz8ICqjF2W9yaGruFmn/bQk2FKPsO6AYgZOlraF5rinoLkk2xyGA7h/2MSdkU9RZXm2IRYDuHvQykVCFDadyRde4tGvq1JVIuPP6Uad9nv64o6ysVdlJk9aVTQ50OYZe3BZepRZnkQuSTsTeO/SX1gfWVCnupz2eyKfxM+FOYmo3oAxsVbEdhF/WuKTh98ayzVeutaikXFt//6edHflEVZX2l+l7ZmlcW3Ktngq2a8D0yvwodYepCyKoQ7fSSYl5Sl58fKZ9vXHQI+mg3Qo7CX0p5Dl6rS6n+88F86CHKIJRI+0PK/xgqRAgRSi5N1NvkvA17jp5FqNDJ5hMrbaf2ivq5XKlDAJRLrlEMeaUd3KTQnr9/XNnvPhmhoSBPNiZS8TYdKRoN8NTaOD3OwyF6EHmFBVL03AXDRsEz1A5tbex8cBHLbx9SN8IywZIKvdSDcJU6mftNcqfsqjN+p+kUwnUaax5vtO0dNNoOAfO5rzv/L7cDy34HgjXPd955J+1aHX7vJPTvADBXpws=",
+    "blocks": [
+      {
+        "height": 10523520,
+        "begin": {
+          "request": "Oq0BCiBTLPFxcZgiIFXz7GvYnajqSASd4x8uUhHcN4ehVE+0qxJHCgASEG1pbnRlci1tYWlubmV0LTUYgKeCBSIGCIrs07sGKgISAFogmgOa36fiP2zVP5wL2DZLJPAt60l6XeJl9Nz4kJg9jioaQBIdChsKFFd4+YXbdUxmKGkfVvra5Qxl/dvoGJDu/B4SHwobChQB0Pq9JR/LviuTtLknsmrSoamQdxjv09oQEAE=",
+          "response": "QgA="
+        },
+        "end": {
+          "request": "UgUIgKeCBQ==",
+          "response": "WmMKKQoiCiACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABCQ7vweCikKIgogAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ79PaEBILCgkIgK3iBBCgjQY="
+        },
+        "commit": {
+          "request": "WgA=",
+          "response": "YiISINl+st7dW0aWd7ZI1wBkqfzmuAsTsWy82itDPS+CR6bw"
+        },
+        "appHash": "d97eb2dedd5b469677b648d70064a9fce6b80b13b16cbcda2b433d2f8247a6f0",
+        "emission": "10000000000000000000000000000",
+        "events": [
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Validator",
+              "address": "Mx0201000000000000000000000000000000000000",
+              "amount": "0",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "DAO",
+              "address": "Mx7f0fc21d932f38ca9444f61703174569066cfa50",
+              "amount": "0",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Developers",
+              "address": "Mx688568d9d70c57e71d0b9de6480afb0d317f885c",
+              "amount": "0",
+              "validator_pub_key": "Mp0200000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Validator",
+              "address": "Mx0101000000000000000000000000000000000000",
+              "amount": "10271604938",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Delegator",
+              "address": "Mx0101000000000000000000000000000000000000",
+              "amount": "58697957365",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Delegator",
+              "address": "Mx0102000000000000000000000000000000000000",
+              "amount": "10042783379",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "DAO",
+              "address": "Mx7f0fc21d932f38ca9444f61703174569066cfa50",
+              "amount": "9876543210",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          },
+          {
+            "type": "minter/RewardEvent",
+            "value": {
+              "role": "Developers",
+              "address": "Mx688568d9d70c57e71d0b9de6480afb0d317f885c",
+              "amount": "9876543210",
+              "validator_pub_key": "Mp0100000000000000000000000000000000000000000000000000000000000000",
+              "for_coin": "0"
+            }
+          }
+        ]
+      },
+      {
+        "height": 10523521,
+        "begin": {
+          "request": "Oq0BCiCDKAq0s88RBg/l6w7HXYZwv5I5+1gqpnDwNy/gfXcDERJHCgASEG1pbnRlci1tYWlubmV0LTUYgaeCBSIGCI/s07sGKgISAFog2X6y3t1bRpZ3tkjXAGSp/Oa4CxOxbLzaK0M9L4JHpvAaQBIdChsKFFd4+YXbdUxmKGkfVvra5Qxl/dvoGJDu/B4SHwobChQB0Pq9JR/LviuTtLknsmrSoamQdxjv09oQEAE=",
+          "response": "QgA="
+        },
+        "end": {
+          "request": "UgUIgaeCBQ==",
+          "response": "Wg0SCwoJCICt4gQQoI0G"
+        },
+        "commit": {
+          "request": "WgA=",
+          "response": "YiISIKrVa9SWLx1n6Dn6IuG66pMmmOsD3eo+lzdbDrV7wsNX"
+        },
+        "appHash": "aad56bd4962f1d67e839fa22e1baea932698eb03ddea3e97375b0eb57bc2c357",
+        "emission": "10000000000000000000000000000",
+        "events": []
+      }
+    ]
+  }
+]

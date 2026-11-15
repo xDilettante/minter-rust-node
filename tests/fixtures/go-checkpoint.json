@@ -1,0 +1,10 @@
+{
+  "appHash": "110d51b38af91ebdb5bf0f7b054569203ef7c440652cfa7d5ff44f84d1cb6f78",
+  "blockHash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "bytes": 171,
+  "format": 1,
+  "height": 2,
+  "network": "minter-test-fixture",
+  "nodes": 7,
+  "snapshotSha256": "1a6c95b8dfd81089b8dfe5882740d92f1206257f2257857f1dc59b4f0bc9553a"
+}

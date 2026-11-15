@@ -1,0 +1,745 @@
+diff --git a/cmd/tendermint/commands/run_node.go b/cmd/tendermint/commands/run_node.go
+index fd4408c..a395259 100644
+--- a/cmd/tendermint/commands/run_node.go
++++ b/cmd/tendermint/commands/run_node.go
+@@ -32,6 +32,8 @@ func AddNodeFlags(cmd *cobra.Command) {
+ 
+ 	// node flags
+ 	cmd.Flags().Bool("fast_sync", config.FastSyncMode, "fast blockchain syncing")
++	cmd.Flags().Int64("keep_blocks", config.KeepBlocks, "block and ABCI result history target; zero keeps all")
++	cmd.Flags().Int64("keep_index_blocks", config.KeepIndexBlocks, "indexed history in block heights; zero keeps all")
+ 	cmd.Flags().BytesHexVar(
+ 		&genesisHash,
+ 		"genesis_hash",
+diff --git a/config/config.go b/config/config.go
+index 5162d2d..5e1fa4c 100644
+--- a/config/config.go
++++ b/config/config.go
+@@ -116,6 +116,9 @@ func (cfg *Config) SetRoot(root string) *Config {
+ // ValidateBasic performs basic validation (checking param bounds, etc.) and
+ // returns an error if any check fails.
+ func (cfg *Config) ValidateBasic() error {
++	if cfg.KeepIndexBlocks > 0 && cfg.TxIndex.Indexer != "kv" {
++		return errors.New("keep_index_blocks requires the kv indexer")
++	}
+ 	if err := cfg.BaseConfig.ValidateBasic(); err != nil {
+ 		return err
+ 	}
+@@ -191,6 +194,10 @@ type BaseConfig struct { //nolint: maligned
+ 	// Database directory
+ 	DBPath string `mapstructure:"db_dir"`
+ 
++	// Targets for local history. Zero keeps all history.
++	KeepBlocks      int64 `mapstructure:"keep_blocks"`
++	KeepIndexBlocks int64 `mapstructure:"keep_index_blocks"`
++
+ 	// Output level for logging
+ 	LogLevel string `mapstructure:"log_level"`
+ 
+@@ -282,6 +289,12 @@ func (cfg BaseConfig) DBDir() string {
+ // ValidateBasic performs basic validation (checking param bounds, etc.) and
+ // returns an error if any check fails.
+ func (cfg BaseConfig) ValidateBasic() error {
++	if cfg.KeepBlocks < 0 || cfg.KeepIndexBlocks < 0 {
++		return errors.New("keep_blocks and keep_index_blocks must be non-negative")
++	}
++	if (cfg.KeepBlocks > 0 || cfg.KeepIndexBlocks > 0) && cfg.DBBackend != "goleveldb" {
++		return errors.New("bounded history requires the goleveldb database backend")
++	}
+ 	switch cfg.LogFormat {
+ 	case LogFormatPlain, LogFormatJSON:
+ 	default:
+diff --git a/config/toml.go b/config/toml.go
+index 36fa00b..2c1902c 100644
+--- a/config/toml.go
++++ b/config/toml.go
+@@ -116,6 +116,13 @@ db_backend = "{{ .BaseConfig.DBBackend }}"
+ # Database directory
+ db_dir = "{{ js .BaseConfig.DBPath }}"
+ 
++# Local block and ABCI result history target. Evidence and double-sign checks
++# can require a longer history. Zero keeps all blocks.
++keep_blocks = {{ .BaseConfig.KeepBlocks }}
++
++# Number of heights of transaction and block event indexes. Zero keeps all.
++keep_index_blocks = {{ .BaseConfig.KeepIndexBlocks }}
++
+ # Output level for logging, including package level options
+ log_level = "{{ .BaseConfig.LogLevel }}"
+ 
+diff --git a/node/history.go b/node/history.go
+new file mode 100644
+index 0000000..bca5d6a
+--- /dev/null
++++ b/node/history.go
+@@ -0,0 +1,113 @@
++package node
++
++import (
++	"fmt"
++	"time"
++
++	cfg "github.com/tendermint/tendermint/config"
++	"github.com/tendermint/tendermint/libs/log"
++	sm "github.com/tendermint/tendermint/state"
++)
++
++// Bound the amount of synchronous maintenance when opening a large archive.
++const blocksPerPrune = 256
++
++type historyRetention struct {
++	blocks       sm.BlockStore
++	state        sm.Store
++	keepBlocks   int64
++	keepIndex    int64
++	signLookback int64
++	index        *historyIndex
++	logger       log.Logger
++}
++
++func newHistoryRetention(config *cfg.Config, state sm.Store, blocks sm.BlockStore, logger log.Logger) *historyRetention {
++	return &historyRetention{
++		blocks:       blocks,
++		state:        state,
++		keepBlocks:   config.KeepBlocks,
++		keepIndex:    config.KeepIndexBlocks,
++		signLookback: config.Consensus.DoubleSignCheckHeight,
++		logger:       logger.With("module", "history"),
++	}
++}
++
++// Both block sync and consensus use the same executor. At startup, the same
++// maintenance resumes after the ABCI handshake has aligned their heights.
++func (r *historyRetention) advance(state sm.State, appHeight int64) int64 {
++	if r.index != nil && state.LastBlockHeight >= r.keepIndex {
++		floor := state.LastBlockHeight - r.keepIndex + 1
++		if err := r.index.prune(floor); err != nil {
++			r.logger.Error("could not prune index history", "height", state.LastBlockHeight, "err", err)
++		}
++	}
++	if r.keepBlocks == 0 {
++		return appHeight
++	}
++	if err := r.pruneBlocks(state, appHeight); err != nil {
++		r.logger.Error("could not prune block history", "height", state.LastBlockHeight, "err", err)
++	}
++	// Keep the legacy consensus-only pruning path from skipping the evidence guard.
++	return 0
++}
++
++func (r *historyRetention) pruneBlocks(state sm.State, appHeight int64) error {
++	base := r.blocks.Base()
++	height := state.LastBlockHeight
++	if base <= 0 || height < base || height != r.blocks.Height() {
++		return nil
++	}
++	evidence := state.ConsensusParams.Evidence
++	target := minHeight(height-r.keepBlocks+1, height-evidence.MaxAgeNumBlocks)
++	if r.signLookback > 0 {
++		target = minHeight(target, height-r.signLookback)
++	}
++	if appHeight > 0 {
++		target = minHeight(target, appHeight)
++	}
++	target = minHeight(target, base+minHeight(blocksPerPrune, height-base))
++	if target <= base {
++		return nil
++	}
++	cutoff := state.LastBlockTime.Add(-evidence.MaxAgeDuration)
++	floor, err := oldestForEvidenceTime(r.blocks, base, target, cutoff)
++	if err != nil || floor <= base {
++		return err
++	}
++	// Keep the old block base until the state batch is durable. A retry after
++	// interruption repeats the same state deletions before advancing the base.
++	if err := r.state.PruneStates(base, floor); err != nil {
++		return err
++	}
++	if _, err := r.blocks.PruneBlocks(floor); err != nil {
++		return err
++	}
++	r.logger.Debug("pruned block and ABCI history", "height", height, "base", floor)
++	return nil
++}
++
++// Tendermint requires strictly increasing block times. Evidence expires only
++// after both its height and time thresholds, and is valid at equality.
++func oldestForEvidenceTime(blocks sm.BlockStore, base, target int64, cutoff time.Time) (int64, error) {
++	for base < target {
++		mid := base + (target-base)/2
++		meta := blocks.LoadBlockMeta(mid)
++		if meta == nil {
++			return 0, fmt.Errorf("missing block header at height %d", mid)
++		}
++		if meta.Header.Time.Before(cutoff) {
++			base = mid + 1
++		} else {
++			target = mid
++		}
++	}
++	return base, nil
++}
++
++func minHeight(a, b int64) int64 {
++	if a < b {
++		return a
++	}
++	return b
++}
+diff --git a/node/history_index.go b/node/history_index.go
+new file mode 100644
+index 0000000..ef6d250
+--- /dev/null
++++ b/node/history_index.go
+@@ -0,0 +1,261 @@
++package node
++
++import (
++	"bytes"
++	"crypto/sha256"
++	"encoding/binary"
++	"fmt"
++	"strconv"
++	"sync"
++
++	abci "github.com/tendermint/tendermint/abci/types"
++	dbm "github.com/tendermint/tm-db"
++)
++
++const (
++	historyKeyPrefix = "\x00minter/tendermint-retention/index-by-height/v1/"
++	historyFloorKey  = "\x00minter/tendermint-retention/index-floor/v1"
++	keysPerBatch     = 1000
++)
++
++// Keep the stock KV index format. An ordered directory records which keys
++// belong to each height. Both the transaction and block-event index use it.
++type historyIndex struct {
++	dbm.DB
++	mu    sync.Mutex
++	floor int64
++}
++
++func openHistoryIndex(db dbm.DB) (*historyIndex, error) {
++	ldb, ok := db.(*dbm.GoLevelDB)
++	if !ok {
++		return nil, fmt.Errorf("bounded indexes require GoLevelDB")
++	}
++	index := &historyIndex{DB: db}
++	raw, err := db.Get([]byte(historyFloorKey))
++	if err != nil {
++		return nil, err
++	}
++	if raw != nil {
++		if len(raw) != 8 || int64(binary.BigEndian.Uint64(raw)) < 1 {
++			return nil, fmt.Errorf("invalid index history floor")
++		}
++		index.floor = int64(binary.BigEndian.Uint64(raw))
++	}
++	if err := index.discover(ldb); err != nil {
++		return nil, err
++	}
++	return index, nil
++}
++
++// Reconcile older stock keys when enabling bounded history. GoLevelDB's
++// snapshot keeps iteration stable while the new directory is populated.
++func (idx *historyIndex) discover(db *dbm.GoLevelDB) error {
++	snapshot, err := db.DB().GetSnapshot()
++	if err != nil {
++		return err
++	}
++	defer snapshot.Release()
++	iter := snapshot.NewIterator(nil, nil)
++	defer iter.Release()
++	batch := db.NewBatch()
++	defer func() { batch.Close() }()
++	count := 0
++	for iter.Next() {
++		key := iter.Key()
++		if bytes.HasPrefix(key, []byte(historyKeyPrefix)) || bytes.Equal(key, []byte(historyFloorKey)) {
++			continue
++		}
++		height, kind, err := indexHeight(key, iter.Value())
++		if err != nil {
++			return err
++		}
++		directoryKey := historyKey(height, key)
++		exists, err := snapshot.Has(directoryKey, nil)
++		if err != nil {
++			return err
++		}
++		if exists {
++			continue
++		}
++		if err := batch.Set(directoryKey, []byte{kind}); err != nil {
++			return err
++		}
++		count++
++		if count == keysPerBatch {
++			if err := batch.WriteSync(); err != nil {
++				return err
++			}
++			batch.Close()
++			batch = db.NewBatch()
++			count = 0
++		}
++	}
++	if err := iter.Error(); err != nil {
++		return err
++	}
++	if count != 0 {
++		return batch.WriteSync()
++	}
++	return nil
++}
++
++const (
++	secondaryKey byte = 0
++	hashKey      byte = 1
++)
++
++func indexHeight(key, value []byte) (int64, byte, error) {
++	if len(key) == sha256.Size {
++		var result abci.TxResult
++		if result.Unmarshal(value) == nil && result.Height > 0 {
++			hash := sha256.Sum256(result.Tx)
++			if bytes.Equal(key, hash[:]) {
++				return result.Height, hashKey, nil
++			}
++		}
++	}
++	if bytes.HasPrefix(key, []byte("block_events")) {
++		if height, n := binary.Varint(value); n == len(value) && height > 0 {
++			return height, secondaryKey, nil
++		}
++	}
++	// The height and index are the last two slash-separated fields. An
++	// indexed attribute value can itself contain slashes.
++	if len(value) == sha256.Size {
++		if index := bytes.LastIndexByte(key, '/'); index > 0 {
++			prefix := key[:index]
++			if height := bytes.LastIndexByte(prefix, '/'); height > 0 {
++				h, err := strconv.ParseInt(string(prefix[height+1:]), 10, 64)
++				_, indexErr := strconv.ParseUint(string(key[index+1:]), 10, 32)
++				if err == nil && indexErr == nil && h > 0 {
++					return h, secondaryKey, nil
++				}
++			}
++		}
++	}
++	return 0, 0, fmt.Errorf("unrecognized Tendermint KV index key %x", key)
++}
++
++func heightBytes(height int64) []byte {
++	var data [8]byte
++	binary.BigEndian.PutUint64(data[:], uint64(height))
++	return data[:]
++}
++
++func historyKey(height int64, key []byte) []byte {
++	result := make([]byte, len(historyKeyPrefix)+8+len(key))
++	copy(result, historyKeyPrefix)
++	binary.BigEndian.PutUint64(result[len(historyKeyPrefix):], uint64(height))
++	copy(result[len(historyKeyPrefix)+8:], key)
++	return result
++}
++
++func (idx *historyIndex) NewBatch() dbm.Batch {
++	idx.mu.Lock()
++	return &historyIndexBatch{Batch: idx.DB.NewBatch(), index: idx}
++}
++
++type historyIndexBatch struct {
++	dbm.Batch
++	index  *historyIndex
++	closed bool
++}
++
++func (batch *historyIndexBatch) Set(key, value []byte) error {
++	height, kind, err := indexHeight(key, value)
++	if err != nil || height < batch.index.floor {
++		return err
++	}
++	if err := batch.Batch.Set(key, value); err != nil {
++		return err
++	}
++	return batch.Batch.Set(historyKey(height, key), []byte{kind})
++}
++
++func (batch *historyIndexBatch) Close() error {
++	if batch.closed {
++		return nil
++	}
++	batch.closed = true
++	defer batch.index.mu.Unlock()
++	return batch.Batch.Close()
++}
++
++func (idx *historyIndex) prune(floor int64) error {
++	idx.mu.Lock()
++	defer idx.mu.Unlock()
++	if floor < idx.floor {
++		floor = idx.floor
++	}
++	for {
++		done, err := idx.pruneBatch(floor)
++		if err != nil || done {
++			return err
++		}
++	}
++}
++
++func (idx *historyIndex) pruneBatch(floor int64) (bool, error) {
++	batch := idx.DB.NewBatch()
++	defer batch.Close()
++	count, more, err := idx.stageExpired(batch, floor)
++	if err != nil {
++		return false, err
++	}
++	if !more && floor != idx.floor {
++		if err := batch.Set([]byte(historyFloorKey), heightBytes(floor)); err != nil {
++			return false, err
++		}
++	} else if count == 0 {
++		return true, nil
++	}
++	if err := batch.WriteSync(); err != nil {
++		return false, err
++	}
++	if !more {
++		idx.floor = floor
++	}
++	return !more, nil
++}
++
++func (idx *historyIndex) stageExpired(batch dbm.Batch, floor int64) (int, bool, error) {
++	iter, err := idx.DB.Iterator([]byte(historyKeyPrefix), historyKey(floor, nil))
++	if err != nil {
++		return 0, false, err
++	}
++	defer iter.Close()
++	count := 0
++	for ; iter.Valid() && count < keysPerBatch; iter.Next() {
++		entry, kind := iter.Key(), iter.Value()
++		if len(entry) <= len(historyKeyPrefix)+8 || len(kind) != 1 || kind[0] > hashKey {
++			return 0, false, fmt.Errorf("invalid index history directory entry")
++		}
++		original := entry[len(historyKeyPrefix)+8:]
++		remove := true
++		if kind[0] == hashKey {
++			// A newer occurrence of the same transaction may now own this hash.
++			value, err := idx.DB.Get(original)
++			if err != nil {
++				return 0, false, err
++			}
++			if value != nil {
++				height, _, err := indexHeight(original, value)
++				if err != nil {
++					return 0, false, err
++				}
++				remove = height < floor
++			}
++		}
++		if remove {
++			if err := batch.Delete(original); err != nil {
++				return 0, false, err
++			}
++		}
++		if err := batch.Delete(entry); err != nil {
++			return 0, false, err
++		}
++		count++
++	}
++	return count, iter.Valid(), iter.Error()
++}
+diff --git a/node/history_test.go b/node/history_test.go
+new file mode 100644
+index 0000000..36b97ee
+--- /dev/null
++++ b/node/history_test.go
+@@ -0,0 +1,129 @@
++package node
++
++import (
++	"errors"
++	"testing"
++	"time"
++
++	"github.com/stretchr/testify/require"
++	abci "github.com/tendermint/tendermint/abci/types"
++	"github.com/tendermint/tendermint/libs/log"
++	sm "github.com/tendermint/tendermint/state"
++	blockkv "github.com/tendermint/tendermint/state/indexer/block/kv"
++	txkv "github.com/tendermint/tendermint/state/txindex/kv"
++	"github.com/tendermint/tendermint/types"
++	dbm "github.com/tendermint/tm-db"
++)
++
++type historyBlockFixture struct {
++	sm.BlockStore
++	base, head int64
++	pruneError error
++}
++
++func (f *historyBlockFixture) Base() int64   { return f.base }
++func (f *historyBlockFixture) Height() int64 { return f.head }
++func (f *historyBlockFixture) LoadBlockMeta(height int64) *types.BlockMeta {
++	return &types.BlockMeta{Header: types.Header{Height: height, Time: time.Unix(height, 0)}}
++}
++
++func (f *historyBlockFixture) PruneBlocks(height int64) (uint64, error) {
++	if f.pruneError != nil {
++		return 0, f.pruneError
++	}
++	count := height - f.base
++	f.base = height
++	return uint64(count), nil
++}
++
++type historyStateFixture struct {
++	sm.Store
++	cuts [][2]int64
++}
++
++func (f *historyStateFixture) PruneStates(from, to int64) error {
++	f.cuts = append(f.cuts, [2]int64{from, to})
++	return nil
++}
++
++func TestMinterBlockHistoryRetainsEvidenceAndRetries(t *testing.T) {
++	blocks := &historyBlockFixture{base: 100, head: 110, pruneError: errors.New("interrupted block prune")}
++	database := &historyStateFixture{}
++	params := types.DefaultConsensusParams()
++	params.Evidence.MaxAgeNumBlocks = 3
++	params.Evidence.MaxAgeDuration = 5 * time.Second
++	state := sm.State{LastBlockHeight: blocks.head, LastBlockTime: time.Unix(blocks.head, 0), ConsensusParams: *params}
++	retention := historyRetention{blocks: blocks, state: database, keepBlocks: 2, logger: log.NewNopLogger()}
++
++	require.Error(t, retention.pruneBlocks(state, 0))
++	require.EqualValues(t, 100, blocks.Base())
++	blocks.pruneError = nil
++	require.NoError(t, retention.pruneBlocks(state, 0))
++	require.EqualValues(t, 105, blocks.Base()) // equality stays available
++	require.Equal(t, [][2]int64{{100, 105}, {100, 105}}, database.cuts)
++
++	blocks.head = 120
++	state.LastBlockHeight = blocks.head
++	state.LastBlockTime = time.Unix(blocks.head, 0)
++	retention.signLookback = 8
++	require.NoError(t, retention.pruneBlocks(state, 113))
++	require.EqualValues(t, 112, blocks.Base())
++	retention.signLookback = 0
++	require.NoError(t, retention.pruneBlocks(state, 113))
++	require.EqualValues(t, 113, blocks.Base())
++}
++
++func TestMinterIndexHistoryMigratesAndPreservesDuplicate(t *testing.T) {
++	dir := t.TempDir()
++	db, err := dbm.NewGoLevelDB("index", dir)
++	require.NoError(t, err)
++	legacy := txkv.NewTxIndex(db)
++	legacyBlocks := blockkv.New(dbm.NewPrefixDB(db, []byte("block_events")))
++	old := &abci.TxResult{Height: 101, Tx: []byte("repeat"), Result: abci.ResponseDeliverTx{
++		Events: []abci.Event{{Type: "tags", Attributes: []abci.EventAttribute{
++			{Key: []byte("owner"), Value: []byte("old/owner"), Index: true},
++		}}},
++	}}
++	require.NoError(t, legacy.Index(old))
++	require.NoError(t, legacyBlocks.Index(types.EventDataNewBlockHeader{Header: types.Header{Height: 101}}))
++
++	history, err := openHistoryIndex(db)
++	require.NoError(t, err)
++	txs := txkv.NewTxIndex(history)
++	blocks := blockkv.New(dbm.NewPrefixDB(history, []byte("block_events")))
++	repeat := &abci.TxResult{Height: 105, Tx: old.Tx}
++	require.NoError(t, txs.Index(repeat))
++	require.NoError(t, blocks.Index(types.EventDataNewBlockHeader{Header: types.Header{Height: 105}}))
++	require.NoError(t, history.prune(103))
++	found, err := txs.Get(types.Tx(old.Tx).Hash())
++	require.NoError(t, err)
++	require.EqualValues(t, 105, found.Height)
++	for _, key := range []string{"tx.height/101/101/0", "tags.owner/old/owner/101/0"} {
++		exists, err := db.Has([]byte(key))
++		require.NoError(t, err)
++		require.False(t, exists)
++	}
++	exists, err := blocks.Has(101)
++	require.NoError(t, err)
++	require.False(t, exists)
++	exists, err = blocks.Has(105)
++	require.NoError(t, err)
++	require.True(t, exists)
++	require.NoError(t, db.Close())
++
++	db, err = dbm.NewGoLevelDB("index", dir)
++	require.NoError(t, err)
++	defer db.Close()
++	history, err = openHistoryIndex(db)
++	require.NoError(t, err)
++	require.EqualValues(t, 103, history.floor)
++	txs = txkv.NewTxIndex(history)
++	require.NoError(t, txs.Index(old)) // delayed indexing cannot reinsert deleted entries
++	found, err = txs.Get(types.Tx(old.Tx).Hash())
++	require.NoError(t, err)
++	require.EqualValues(t, 105, found.Height)
++	require.NoError(t, history.prune(106))
++	found, err = txs.Get(types.Tx(old.Tx).Hash())
++	require.NoError(t, err)
++	require.Nil(t, found)
++}
+diff --git a/node/node.go b/node/node.go
+index 18fde00..1032c98 100644
+--- a/node/node.go
++++ b/node/node.go
+@@ -267,6 +267,7 @@ func createAndStartIndexerService(
+ 	dbProvider DBProvider,
+ 	eventBus *types.EventBus,
+ 	logger log.Logger,
++	history *historyRetention,
+ ) (*txindex.IndexerService, txindex.TxIndexer, indexer.BlockIndexer, error) {
+ 
+ 	var (
+@@ -280,6 +281,13 @@ func createAndStartIndexerService(
+ 		if err != nil {
+ 			return nil, nil, nil, err
+ 		}
++		if history.keepIndex > 0 {
++			history.index, err = openHistoryIndex(store)
++			if err != nil {
++				return nil, nil, nil, fmt.Errorf("prepare bounded index: %w", err)
++			}
++			store = history.index
++		}
+ 
+ 		txIndexer = kv.NewTxIndex(store)
+ 		blockIndexer = blockidxkv.New(dbm.NewPrefixDB(store, []byte("block_events")))
+@@ -677,6 +685,7 @@ func NewNode(config *cfg.Config,
+ 	}
+ 
+ 	stateStore := sm.NewStore(stateDB)
++	history := newHistoryRetention(config, stateStore, blockStore, logger)
+ 
+ 	state, genDoc, err := LoadStateFromDBOrGenesisDocProvider(stateDB, genesisDocProvider)
+ 	if err != nil {
+@@ -699,7 +708,7 @@ func NewNode(config *cfg.Config,
+ 	}
+ 
+ 	indexerService, txIndexer, blockIndexer, err := createAndStartIndexerService(config,
+-		genDoc.ChainID, dbProvider, eventBus, logger)
++		genDoc.ChainID, dbProvider, eventBus, logger, history)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+@@ -746,6 +755,7 @@ func NewNode(config *cfg.Config,
+ 	// Determine whether we should do fast sync. This must happen after the handshake, since the
+ 	// app may modify the validator set, specifying ourself as the only validator.
+ 	fastSync := config.FastSyncMode && !onlyValidatorIsUs(state, pubKey)
++	history.advance(state, 0)
+ 
+ 	logNodeStartupInfo(state, pubKey, logger, consensusLogger)
+ 
+@@ -768,6 +778,7 @@ func NewNode(config *cfg.Config,
+ 		mempool,
+ 		evidencePool,
+ 		sm.BlockExecutorWithMetrics(smMetrics),
++		sm.BlockExecutorWithHistory(history.advance),
+ 	)
+ 
+ 	// Make BlockchainReactor. Don't start fast sync if we're doing a state sync first.
+diff --git a/rpc/core/tx.go b/rpc/core/tx.go
+index 13f6042..30bb921 100644
+--- a/rpc/core/tx.go
++++ b/rpc/core/tx.go
+@@ -38,6 +38,9 @@ func Tx(ctx *rpctypes.Context, hash []byte, prove bool) (*ctypes.ResultTx, error
+ 	var proof types.TxProof
+ 	if prove {
+ 		block := env.BlockStore.LoadBlock(height)
++		if block == nil {
++			return nil, fmt.Errorf("block %d needed for transaction proof is unavailable", height)
++		}
+ 		proof = block.Data.Txs.Proof(int(index)) // XXX: overflow on 32-bit machines
+ 	}
+ 
+@@ -116,6 +119,9 @@ func TxSearch(
+ 		var proof types.TxProof
+ 		if prove {
+ 			block := env.BlockStore.LoadBlock(r.Height)
++			if block == nil {
++				return nil, fmt.Errorf("block %d needed for transaction proof is unavailable", r.Height)
++			}
+ 			proof = block.Data.Txs.Proof(int(r.Index)) // XXX: overflow on 32-bit machines
+ 		}
+ 
+diff --git a/state/execution.go b/state/execution.go
+index 2cc3db6..1c34577 100644
+--- a/state/execution.go
++++ b/state/execution.go
+@@ -40,6 +40,8 @@ type BlockExecutor struct {
+ 	logger log.Logger
+ 
+ 	metrics *Metrics
++
++	afterCommit func(State, int64) int64
+ }
+ 
+ type BlockExecutorOption func(executor *BlockExecutor)
+@@ -50,6 +52,14 @@ func BlockExecutorWithMetrics(metrics *Metrics) BlockExecutorOption {
+ 	}
+ }
+ 
++// BlockExecutorWithHistory runs local retention after both durable commits.
++// The return value is the retain height still to be handled by the caller.
++func BlockExecutorWithHistory(advance func(State, int64) int64) BlockExecutorOption {
++	return func(executor *BlockExecutor) {
++		executor.afterCommit = advance
++	}
++}
++
+ // NewBlockExecutor returns a new BlockExecutor with a NopEventBus.
+ // Call SetEventBus to provide one.
+ func NewBlockExecutor(
+@@ -197,6 +207,9 @@ func (blockExec *BlockExecutor) ApplyBlock(
+ 
+ 	// Events are fired after everything else.
+ 	// NOTE: if we crash between Commit and Save, events wont be fired during replay
++	if blockExec.afterCommit != nil {
++		retainHeight = blockExec.afterCommit(state, retainHeight)
++	}
+ 	fireEvents(blockExec.logger, blockExec.eventBus, block, abciResponses, validatorUpdates)
+ 
+ 	return state, retainHeight, nil
+diff --git a/store/store.go b/store/store.go
+index 6f27d27..66d285d 100644
+--- a/store/store.go
++++ b/store/store.go
+@@ -265,6 +265,20 @@ func (bs *BlockStore) PruneBlocks(height int64) (uint64, error) {
+ 	batch := bs.db.NewBatch()
+ 	defer batch.Close()
+ 	flush := func(batch dbm.Batch, base int64) error {
++		if _, atomic := bs.db.(*dbm.GoLevelDB); atomic {
++			bs.mtx.Lock()
++			defer bs.mtx.Unlock()
++			state := tmstore.BlockStoreState{Base: base, Height: bs.height}
++			if err := batch.Set(blockStoreKey, mustEncode(&state)); err != nil {
++				return err
++			}
++			if err := batch.WriteSync(); err != nil {
++				return fmt.Errorf("failed to prune up to height %v: %w", base, err)
++			}
++			bs.base = base
++			batch.Close()
++			return nil
++		}
+ 		// We can't trust batches to be atomic, so update base first to make sure noone
+ 		// tries to access missing blocks.
+ 		bs.mtx.Lock()
+@@ -306,7 +320,7 @@ func (bs *BlockStore) PruneBlocks(height int64) (uint64, error) {
+ 
+ 		// flush every 1000 blocks to avoid batches becoming too large
+ 		if pruned%1000 == 0 && pruned > 0 {
+-			err := flush(batch, h)
++			err := flush(batch, h+1)
+ 			if err != nil {
+ 				return 0, err
+ 			}

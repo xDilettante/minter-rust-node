@@ -1,0 +1,21 @@
+[package]
+license = "MIT"
+name = "minter-desktop"
+version = "0.1.0"
+edition = "2024"
+description = "Minter node desktop application"
+
+[workspace]
+
+[build-dependencies]
+tauri-build = { version = "=2.7.4", features = [] }
+
+[dependencies]
+anyhow = "1"
+minter-node-control = { path = "../../crates/minter-node-control" }
+tauri = { version = "=2.12.5", features = ["tray-icon"] }
+tauri-plugin-dialog = "=2.8.4"
+tauri-plugin-single-instance = "=2.5.5"
+
+[profile.release]
+strip = true

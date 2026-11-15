@@ -1,0 +1,181 @@
+diff --git a/config/config.go b/config/config.go
+--- a/config/config.go
++++ b/config/config.go
+@@ -209,6 +209,7 @@
+ 	// TCP or UNIX socket address for Tendermint to listen on for
+ 	// connections from an external PrivValidator process
+ 	PrivValidatorListenAddr string `mapstructure:"priv_validator_laddr"`
++	PrivValidatorSignerID   string `mapstructure:"priv_validator_signer_id"`
+ 
+ 	// A JSON file containing the private key to use for p2p authenticated encryption
+ 	NodeKey string `mapstructure:"node_key_file"`
+diff --git a/node/node.go b/node/node.go
+--- a/node/node.go
++++ b/node/node.go
+@@ -22,6 +22,7 @@
+ 	cfg "github.com/tendermint/tendermint/config"
+ 	cs "github.com/tendermint/tendermint/consensus"
+ 	"github.com/tendermint/tendermint/crypto"
++	"github.com/tendermint/tendermint/crypto/ed25519"
+ 	"github.com/tendermint/tendermint/evidence"
+ 	tmjson "github.com/tendermint/tendermint/libs/json"
+ 	"github.com/tendermint/tendermint/libs/log"
+@@ -98,8 +99,15 @@
+ 		return nil, fmt.Errorf("failed to load or gen node key %s: %w", config.NodeKeyFile(), err)
+ 	}
+ 
++	if config.PrivValidatorSignerID != "" && config.PrivValidatorListenAddr == "" {
++		return nil, fmt.Errorf("priv_validator_signer_id requires priv_validator_laddr")
++	}
++	var localValidator types.PrivValidator
++	if config.PrivValidatorListenAddr == "" || config.PrivValidatorSignerID == "" {
++		localValidator = privval.LoadOrGenFilePV(config.PrivValidatorKeyFile(), config.PrivValidatorStateFile())
++	}
+ 	return NewNode(config,
+-		privval.LoadOrGenFilePV(config.PrivValidatorKeyFile(), config.PrivValidatorStateFile()),
++		localValidator,
+ 		nodeKey,
+ 		proxy.DefaultClientCreator(config.ProxyApp, config.ABCI, config.DBDir()),
+ 		DefaultGenesisDocProviderFunc(config),
+@@ -708,7 +716,15 @@
+ 	// external signing process.
+ 	if config.PrivValidatorListenAddr != "" {
+ 		// FIXME: we should start services inside OnStart
+-		privValidator, err = createAndStartPrivValidatorSocketClient(config.PrivValidatorListenAddr, genDoc.ChainID, logger)
++		var signerIdentity *privval.TCPIdentity
++		if config.PrivValidatorSignerID != "" {
++			key, ok := nodeKey.PrivKey.(ed25519.PrivKey)
++			if !ok {
++				return nil, fmt.Errorf("private validator listener requires an Ed25519 node key")
++			}
++			signerIdentity = &privval.TCPIdentity{Key: key, PeerID: config.PrivValidatorSignerID}
++		}
++		privValidator, err = createAndStartPrivValidatorSocketClient(config.PrivValidatorListenAddr, genDoc.ChainID, logger, signerIdentity)
+ 		if err != nil {
+ 			return nil, fmt.Errorf("error with private validator socket client: %w", err)
+ 		}
+@@ -1417,8 +1433,9 @@
+ 	listenAddr,
+ 	chainID string,
+ 	logger log.Logger,
++	signerIdentity *privval.TCPIdentity,
+ ) (types.PrivValidator, error) {
+-	pve, err := privval.NewSignerListener(listenAddr, logger)
++	pve, err := privval.NewSignerListenerWithIdentity(listenAddr, logger, signerIdentity)
+ 	if err != nil {
+ 		return nil, fmt.Errorf("failed to start private validator: %w", err)
+ 	}
+diff --git a/privval/utils.go b/privval/utils.go
+--- a/privval/utils.go
++++ b/privval/utils.go
+@@ -1,9 +1,11 @@
+ package privval
+ 
+ import (
++	"encoding/hex"
+ 	"errors"
+ 	"fmt"
+ 	"net"
++	"strings"
+ 
+ 	"github.com/tendermint/tendermint/crypto/ed25519"
+ 	"github.com/tendermint/tendermint/libs/log"
+@@ -27,9 +29,27 @@
+ 
+ // NewSignerListener creates a new SignerListenerEndpoint using the corresponding listen address
+ func NewSignerListener(listenAddr string, logger log.Logger) (*SignerListenerEndpoint, error) {
++	return NewSignerListenerWithIdentity(listenAddr, logger, nil)
++}
++
++// TCPIdentity pins both ends of the encrypted private validator connection.
++type TCPIdentity struct {
++	Key    ed25519.PrivKey
++	PeerID string
++}
++
++func NewSignerListenerWithIdentity(listenAddr string, logger log.Logger, identity *TCPIdentity) (*SignerListenerEndpoint, error) {
+ 	var listener net.Listener
+-
+ 	protocol, address := tmnet.ProtocolAndAddress(listenAddr)
++	if protocol != "tcp" && protocol != "unix" {
++		return nil, fmt.Errorf("private validator listener must use tcp or unix")
++	}
++	if identity != nil {
++		peerID, err := hex.DecodeString(identity.PeerID)
++		if protocol != "tcp" || err != nil || len(peerID) != 20 {
++			return nil, fmt.Errorf("pinned private validator signer requires tcp and a 20-byte peer ID")
++		}
++	}
+ 	ln, err := net.Listen(protocol, address)
+ 	if err != nil {
+ 		return nil, err
+@@ -38,13 +58,13 @@
+ 	case "unix":
+ 		listener = NewUnixListener(ln)
+ 	case "tcp":
+-		// TODO: persist this key so external signer can actually authenticate us
+-		listener = NewTCPListener(ln, ed25519.GenPrivKey())
+-	default:
+-		return nil, fmt.Errorf(
+-			"wrong listen address: expected either 'tcp' or 'unix' protocols, got %s",
+-			protocol,
+-		)
++		if identity == nil {
++			listener = NewTCPListener(ln, ed25519.GenPrivKey())
++		} else {
++			pinned := NewTCPListener(ln, identity.Key)
++			pinned.expectedPeerID = strings.ToLower(identity.PeerID)
++			listener = pinned
++		}
+ 	}
+ 
+ 	pve := NewSignerListenerEndpoint(logger.With("module", "privval"), listener)
+diff --git a/privval/socket_listeners.go b/privval/socket_listeners.go
+--- a/privval/socket_listeners.go
++++ b/privval/socket_listeners.go
+@@ -1,6 +1,8 @@
+ package privval
+ 
+ import (
++	"encoding/hex"
++	"fmt"
+ 	"net"
+ 	"time"
+ 
+@@ -44,7 +46,8 @@
+ type TCPListener struct {
+ 	*net.TCPListener
+ 
+-	secretConnKey ed25519.PrivKey
++	secretConnKey  ed25519.PrivKey
++	expectedPeerID string
+ 
+ 	timeoutAccept    time.Duration
+ 	timeoutReadWrite time.Duration
+@@ -78,9 +81,13 @@
+ 	timeoutConn := newTimeoutConn(tc, ln.timeoutReadWrite)
+ 	secretConn, err := p2pconn.MakeSecretConnection(timeoutConn, ln.secretConnKey)
+ 	if err != nil {
++		_ = tc.Close()
+ 		return nil, err
+ 	}
+-
++	if ln.expectedPeerID != "" && hex.EncodeToString(secretConn.RemotePubKey().Address()) != ln.expectedPeerID {
++		_ = secretConn.Close()
++		return nil, fmt.Errorf("unexpected private validator signer peer ID")
++	}
+ 	return secretConn, nil
+ }
+ 
+diff --git a/privval/signer_listener_endpoint.go b/privval/signer_listener_endpoint.go
+--- a/privval/signer_listener_endpoint.go
++++ b/privval/signer_listener_endpoint.go
+@@ -192,6 +192,8 @@
+ 					case <-sl.Quit():
+ 						return
+ 					}
++				} else {
++					sl.Logger.Debug("Private validator listener rejected connection", "err", err)
+ 				}
+ 
+ 				select {

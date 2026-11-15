@@ -1,0 +1,38 @@
+[package]
+license = "MIT"
+name = "minter-app"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+alloy-rlp = "0.3.17"
+anyhow = "1"
+base64 = "0.22"
+clap = { version = "4.6", features = ["derive"] }
+ed25519-consensus = "2"
+futures-util = { version = "0.3", default-features = false, features = ["std", "sink"] }
+hex = "0.4"
+minter-api = { path = "../minter-api" }
+minter-iavl = { path = "../minter-iavl" }
+minter-p2p = { path = "../minter-p2p" }
+minter-protocol = { path = "../minter-protocol" }
+minter-state = { path = "../.." }
+num-bigint = { version = "0.4", features = ["serde"] }
+num-rational = "0.4"
+num-traits = "0.2"
+prost = "0.13"
+reqwest = { version = "=0.12.28", default-features = false }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["raw_value"] }
+sha2 = "0.10"
+tempfile = "3"
+tendermint = { version = "=0.40.4", default-features = false, features = ["rust-crypto"] }
+tendermint-config = "=0.40.4"
+tendermint-proto = "=0.40.4"
+tendermint-rpc = "=0.40.4"
+thiserror = "2"
+time = { version = "0.3", features = ["formatting", "local-offset"] }
+tokio = { version = "1", features = ["io-util", "macros", "net", "rt-multi-thread", "signal", "sync", "time"] }
+tokio-tungstenite = "0.29"
+tonic = "0.14"
+zeroize = "1"

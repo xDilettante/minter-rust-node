@@ -1,0 +1,2 @@
+retention.patch text eol=lf whitespace=-space-before-tab,-blank-at-eol
+signer.patch text eol=lf whitespace=-space-before-tab,-blank-at-eol
